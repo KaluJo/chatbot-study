@@ -887,7 +887,6 @@ export const SurveyForm = ({
     // For logged-in users, finalQuestionsStep is totalSteps (personal filter questions page)
     if (step < finalQuestionsStep) {
       setStep(prev => prev + 1);
-      topOfFormRef.current?.scrollIntoView({ behavior: 'smooth' });
     } else {
       // Final submission
       if (Object.keys(answers).length < currentQuestionSet.length) {
@@ -986,20 +985,20 @@ export const SurveyForm = ({
         )}
       </div>
       
-      <div className="mb-4 sm:mb-6">
-        <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+      <div className="mb-1">
+        <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
           <div 
             className="h-full bg-blue-500 transition-all duration-300"
             style={{ width: `${(step + 1) / (readOnly ? totalSteps : totalSteps + 1) * 100}%` }}
           ></div>
         </div>
-        <div className="text-xs sm:text-sm text-gray-600 mt-2">
+        <div className="text-xs text-gray-600 mt-2">
           Page {step + 1} of {readOnly ? totalSteps : totalSteps + 1}
         </div>
       </div>
       
       {/* Add ref to questions container */}
-      <div ref={topOfFormRef} className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+      <div ref={topOfFormRef} className="space-y-1 mb-5">
         {step < totalSteps ? (
           currentQuestions.map(question => (
             <QuestionItem

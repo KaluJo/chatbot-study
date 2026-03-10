@@ -21,20 +21,22 @@ export const QuestionItem = ({ question, selectedValue, onAnswer, disabled }: Qu
   ];
 
   return (
-    <div className="py-3 sm:py-4 border-b">
-      <p className="mb-2 sm:mb-3 text-sm sm:text-base text-gray-700">{question}</p>
-      <RadioGroup
-        value={selectedValue ? String(selectedValue) : ""}
-        onValueChange={(value) => !disabled && onAnswer(parseInt(value))}
-        className={`grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center gap-x-4 sm:gap-x-6 gap-y-2 ${disabled ? 'opacity-75 pointer-events-none' : ''}`}
-      >
-        {options.map((option) => (
-          <div key={option.value} className="flex items-center space-x-1.5 sm:space-x-2">
-            <RadioGroupItem value={String(option.value)} id={`${question}-${option.value}`} />
-            <Label htmlFor={`${question}-${option.value}`} className="font-normal text-xs sm:text-sm">{option.label}</Label>
-          </div>
-        ))}
-      </RadioGroup>
+    <div className="py-3 border-b">
+      <p className="mb-2 sm:mb-3 text-sm text-gray-700 text-center">{question}</p>
+      <div className="flex justify-center">
+        <RadioGroup
+          value={selectedValue ? String(selectedValue) : ""}
+          onValueChange={(value) => !disabled && onAnswer(parseInt(value))}
+          className={`mb-1 grid grid-cols-2 sm:grid-cols-3 xl:flex xl:flex-nowrap xl:items-center gap-x-8 gap-y-3 ${disabled ? 'opacity-75 pointer-events-none' : ''}`}
+        >
+          {options.map((option) => (
+            <div key={option.value} className="flex items-center space-x-1.5">
+              <RadioGroupItem value={String(option.value)} id={`${question}-${option.value}`} />
+              <Label htmlFor={`${question}-${option.value}`} className="font-normal text-xs">{option.label}</Label>
+            </div>
+          ))}
+        </RadioGroup>
+      </div>
     </div>
   );
 }; 
