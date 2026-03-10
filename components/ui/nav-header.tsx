@@ -40,7 +40,7 @@ export function NavHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200 px-4 sm:px-6 py-3 flex-shrink-0">
-        <div className="pl-4 max-w-7xl mx-auto grid grid-cols-3 items-center">
+        <div className="pl-2 max-w-7xl mx-auto grid grid-cols-3 items-center">
           {/* Left — empty in demo, logout in non-demo */}
           <div className="flex items-center">
             {!isDemoMode && (
@@ -81,7 +81,7 @@ export function NavHeader() {
             })}
             <button
               onClick={() => setIsAboutOpen(true)}
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-2 rounded-full text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all duration-150"
+              className="inline-flex items-center gap-1.5 sm:gap-2 p-2 rounded-full text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all duration-150"
               aria-label="Info"
             >
               <Info size={22} />
