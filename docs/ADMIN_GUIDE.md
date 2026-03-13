@@ -250,12 +250,24 @@ If a user needs to start over:
 
 ```sql
 -- Delete all user data (use with caution!)
+-- Chat data
 DELETE FROM chatlog WHERE user_id = 'user-uuid';
 DELETE FROM chat_windows WHERE user_id = 'user-uuid';
+DELETE FROM chat_backup WHERE user_id = 'user-uuid';
+DELETE FROM chat_feedback WHERE user_id = 'user-uuid';
+DELETE FROM chat_debug_log WHERE user_id = 'user-uuid';
+DELETE FROM conversation_strategies WHERE user_id = 'user-uuid';
+-- Value graph data
+DELETE FROM thinking_logs WHERE user_id = 'user-uuid';
 DELETE FROM topics WHERE user_id = 'user-uuid';
 DELETE FROM value_nodes WHERE user_id = 'user-uuid';
 DELETE FROM items WHERE user_id = 'user-uuid';
+-- Survey data
 DELETE FROM user_pvq_responses WHERE user_id = 'user-uuid';
+DELETE FROM user_llm_individual_responses WHERE user_id = 'user-uuid';
+DELETE FROM user_llm_batch_responses WHERE user_id = 'user-uuid';
+DELETE FROM stage2_experiment WHERE user_id = 'user-uuid';
+DELETE FROM stage3_experiment WHERE user_id = 'user-uuid';
 ```
 
 ### Changing User Access Code

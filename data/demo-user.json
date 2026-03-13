@@ -12792,728 +12792,6 @@
     }
   ],
   "llmBatchResponses": [],
-  "stage1Experiment": [
-    {
-      "id": "377c2536-3fd2-4533-a27e-fb073eb7345c",
-      "user_id": "3425d950-d745-4af8-af89-01454c301f71",
-      "charts_generated": true,
-      "generation_completed_at": "2025-08-30 17:01:37.826+00",
-      "generation_metadata": {
-        "available_data": {
-          "llm": true,
-          "manual": true
-        },
-        "force_regenerate": true,
-        "generation_timestamp": "2025-08-30T17:00:51.057Z"
-      },
-      "round_1_manual_data": [
-        {
-          "name": "Self-Direction-Thought",
-          "angle": 285,
-          "color": "#84CC16",
-          "value": "SDT",
-          "description": "Freedom to cultivate one's own ideas and abilities",
-          "centeredScore": 1.0701754385964906,
-          "rawValueInverted": 5.333333333333333
-        },
-        {
-          "name": "Self-Direction-Action",
-          "angle": 310,
-          "color": "#A3E635",
-          "value": "SDA",
-          "description": "Freedom to determine one's own actions",
-          "centeredScore": 0.4035087719298245,
-          "rawValueInverted": 4.666666666666667
-        },
-        {
-          "name": "Stimulation",
-          "angle": 330,
-          "color": "#F97316",
-          "value": "ST",
-          "description": "Excitement, novelty, and challenge in life",
-          "centeredScore": 1.7368421052631575,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Hedonism",
-          "angle": 350,
-          "color": "#F59E0B",
-          "value": "HE",
-          "description": "Pleasure and sensuous gratification for oneself",
-          "centeredScore": 1.7368421052631575,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Achievement",
-          "angle": 10,
-          "color": "#EF4444",
-          "value": "AC",
-          "description": "Success according to social standards",
-          "centeredScore": -0.596491228070176,
-          "rawValueInverted": 3.6666666666666665
-        },
-        {
-          "name": "Power-Dominance",
-          "angle": 30,
-          "color": "#E11D48",
-          "value": "POD",
-          "description": "Power through exercising control over people",
-          "centeredScore": -2.9298245614035094,
-          "rawValueInverted": 1.3333333333333333
-        },
-        {
-          "name": "Power-Resources",
-          "angle": 50,
-          "color": "#FB7185",
-          "value": "POR",
-          "description": "Power through control of material and social resources",
-          "centeredScore": -0.596491228070176,
-          "rawValueInverted": 3.6666666666666665
-        },
-        {
-          "name": "Face",
-          "angle": 68.5,
-          "color": "#C026D3",
-          "value": "FAC",
-          "description": "Security and power through maintaining one's public image and avoiding humiliation",
-          "centeredScore": -1.2631578947368425,
-          "rawValueInverted": 3
-        },
-        {
-          "name": "Security-Personal",
-          "angle": 86.5,
-          "color": "#A855F7",
-          "value": "SEP",
-          "description": "Safety in one's immediate environment",
-          "centeredScore": -1.2631578947368425,
-          "rawValueInverted": 3
-        },
-        {
-          "name": "Security-Societal",
-          "angle": 104,
-          "color": "#8B5CF6",
-          "value": "SES",
-          "description": "Safety and stability in the wider society",
-          "centeredScore": -0.596491228070176,
-          "rawValueInverted": 3.6666666666666665
-        },
-        {
-          "name": "Tradition",
-          "angle": 120,
-          "color": "#6366F1",
-          "value": "TR",
-          "description": "Maintaining and preserving cultural, family, or religious traditions",
-          "centeredScore": -2.2631578947368425,
-          "rawValueInverted": 2
-        },
-        {
-          "name": "Conformity-Rules",
-          "angle": 137.5,
-          "color": "#4F46E5",
-          "value": "COR",
-          "description": "Compliance with rules, laws, and formal obligations",
-          "centeredScore": -0.929824561403509,
-          "rawValueInverted": 3.3333333333333335
-        },
-        {
-          "name": "Conformity-Interpersonal",
-          "angle": 153,
-          "color": "#818CF8",
-          "value": "COI",
-          "description": "Avoidance of upsetting or harming other people",
-          "centeredScore": 1.4035087719298245,
-          "rawValueInverted": 5.666666666666667
-        },
-        {
-          "name": "Humility",
-          "angle": 170,
-          "color": "#A78BFA",
-          "value": "HUM",
-          "description": "Recognizing one's insignificance in the larger scheme of things",
-          "centeredScore": 0.07017543859649056,
-          "rawValueInverted": 4.333333333333333
-        },
-        {
-          "name": "Universalism-Nature",
-          "angle": 185,
-          "color": "#3B82F6",
-          "value": "UNN",
-          "description": "Preservation of the natural environment",
-          "centeredScore": -0.596491228070176,
-          "rawValueInverted": 3.6666666666666665
-        },
-        {
-          "name": "Universalism-Concern",
-          "angle": 202,
-          "color": "#2563EB",
-          "value": "UNC",
-          "description": "Commitment to equality, justice, and protection for all people",
-          "centeredScore": 1.0701754385964906,
-          "rawValueInverted": 5.333333333333333
-        },
-        {
-          "name": "Universalism-Tolerance",
-          "angle": 219,
-          "color": "#60A5FA",
-          "value": "UNT",
-          "description": "Acceptance and understanding of those who are different from oneself",
-          "centeredScore": 0.7368421052631575,
-          "rawValueInverted": 5
-        },
-        {
-          "name": "Benevolence-Care",
-          "angle": 237.5,
-          "color": "#10B981",
-          "value": "BEC",
-          "description": "Devotion to the welfare of ingroup members",
-          "centeredScore": 1.7368421052631575,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Benevolence-Dependability",
-          "angle": 260,
-          "color": "#34D399",
-          "value": "BED",
-          "description": "Being a reliable and trustworthy member of the ingroup",
-          "centeredScore": 1.0701754385964906,
-          "rawValueInverted": 5.333333333333333
-        }
-      ],
-      "round_1_anti_manual_data": [
-        {
-          "name": "Self-Direction-Thought",
-          "angle": 285,
-          "color": "#84CC16",
-          "value": "SDT",
-          "description": "Freedom to cultivate one's own ideas and abilities",
-          "centeredScore": -1.526315789473684,
-          "rawValueInverted": 2
-        },
-        {
-          "name": "Self-Direction-Action",
-          "angle": 310,
-          "color": "#A3E635",
-          "value": "SDA",
-          "description": "Freedom to determine one's own actions",
-          "centeredScore": -1.526315789473684,
-          "rawValueInverted": 2
-        },
-        {
-          "name": "Stimulation",
-          "angle": 330,
-          "color": "#F97316",
-          "value": "ST",
-          "description": "Excitement, novelty, and challenge in life",
-          "centeredScore": -2.526315789473684,
-          "rawValueInverted": 1
-        },
-        {
-          "name": "Hedonism",
-          "angle": 350,
-          "color": "#F59E0B",
-          "value": "HE",
-          "description": "Pleasure and sensuous gratification for oneself",
-          "centeredScore": -2.526315789473684,
-          "rawValueInverted": 1
-        },
-        {
-          "name": "Achievement",
-          "angle": 10,
-          "color": "#EF4444",
-          "value": "AC",
-          "description": "Success according to social standards",
-          "centeredScore": 2.473684210526316,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Power-Dominance",
-          "angle": 30,
-          "color": "#E11D48",
-          "value": "POD",
-          "description": "Power through exercising control over people",
-          "centeredScore": 2.473684210526316,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Power-Resources",
-          "angle": 50,
-          "color": "#FB7185",
-          "value": "POR",
-          "description": "Power through control of material and social resources",
-          "centeredScore": 2.473684210526316,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Face",
-          "angle": 68.5,
-          "color": "#C026D3",
-          "value": "FAC",
-          "description": "Security and power through maintaining one's public image and avoiding humiliation",
-          "centeredScore": 2.473684210526316,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Security-Personal",
-          "angle": 86.5,
-          "color": "#A855F7",
-          "value": "SEP",
-          "description": "Safety in one's immediate environment",
-          "centeredScore": 2.473684210526316,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Security-Societal",
-          "angle": 104,
-          "color": "#8B5CF6",
-          "value": "SES",
-          "description": "Safety and stability in the wider society",
-          "centeredScore": 2.473684210526316,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Tradition",
-          "angle": 120,
-          "color": "#6366F1",
-          "value": "TR",
-          "description": "Maintaining and preserving cultural, family, or religious traditions",
-          "centeredScore": 2.473684210526316,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Conformity-Rules",
-          "angle": 137.5,
-          "color": "#4F46E5",
-          "value": "COR",
-          "description": "Compliance with rules, laws, and formal obligations",
-          "centeredScore": 2.473684210526316,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Conformity-Interpersonal",
-          "angle": 153,
-          "color": "#818CF8",
-          "value": "COI",
-          "description": "Avoidance of upsetting or harming other people",
-          "centeredScore": -1.526315789473684,
-          "rawValueInverted": 2
-        },
-        {
-          "name": "Humility",
-          "angle": 170,
-          "color": "#A78BFA",
-          "value": "HUM",
-          "description": "Recognizing one's insignificance in the larger scheme of things",
-          "centeredScore": -2.526315789473684,
-          "rawValueInverted": 1
-        },
-        {
-          "name": "Universalism-Nature",
-          "angle": 185,
-          "color": "#3B82F6",
-          "value": "UNN",
-          "description": "Preservation of the natural environment",
-          "centeredScore": 2.473684210526316,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Universalism-Concern",
-          "angle": 202,
-          "color": "#2563EB",
-          "value": "UNC",
-          "description": "Commitment to equality, justice, and protection for all people",
-          "centeredScore": -2.526315789473684,
-          "rawValueInverted": 1
-        },
-        {
-          "name": "Universalism-Tolerance",
-          "angle": 219,
-          "color": "#60A5FA",
-          "value": "UNT",
-          "description": "Acceptance and understanding of those who are different from oneself",
-          "centeredScore": -2.526315789473684,
-          "rawValueInverted": 1
-        },
-        {
-          "name": "Benevolence-Care",
-          "angle": 237.5,
-          "color": "#10B981",
-          "value": "BEC",
-          "description": "Devotion to the welfare of ingroup members",
-          "centeredScore": -2.526315789473684,
-          "rawValueInverted": 1
-        },
-        {
-          "name": "Benevolence-Dependability",
-          "angle": 260,
-          "color": "#34D399",
-          "value": "BED",
-          "description": "Being a reliable and trustworthy member of the ingroup",
-          "centeredScore": -2.526315789473684,
-          "rawValueInverted": 1
-        }
-      ],
-      "round_1_completed": true,
-      "round_1_winner": "manual",
-      "round_1_completed_at": "2025-08-30 17:14:45.339+00",
-      "round_2_llm_data": [
-        {
-          "name": "Self-Direction-Thought",
-          "angle": 285,
-          "color": "#84CC16",
-          "value": "SDT",
-          "description": "Freedom to cultivate one's own ideas and abilities",
-          "centeredScore": 1.0701754385964914,
-          "rawValueInverted": 5.666666666666667
-        },
-        {
-          "name": "Self-Direction-Action",
-          "angle": 310,
-          "color": "#A3E635",
-          "value": "SDA",
-          "description": "Freedom to determine one's own actions",
-          "centeredScore": -0.5964912280701755,
-          "rawValueInverted": 4
-        },
-        {
-          "name": "Stimulation",
-          "angle": 330,
-          "color": "#F97316",
-          "value": "ST",
-          "description": "Excitement, novelty, and challenge in life",
-          "centeredScore": 1.4035087719298245,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Hedonism",
-          "angle": 350,
-          "color": "#F59E0B",
-          "value": "HE",
-          "description": "Pleasure and sensuous gratification for oneself",
-          "centeredScore": 0.4035087719298245,
-          "rawValueInverted": 5
-        },
-        {
-          "name": "Achievement",
-          "angle": 10,
-          "color": "#EF4444",
-          "value": "AC",
-          "description": "Success according to social standards",
-          "centeredScore": 1.0701754385964914,
-          "rawValueInverted": 5.666666666666667
-        },
-        {
-          "name": "Power-Dominance",
-          "angle": 30,
-          "color": "#E11D48",
-          "value": "POD",
-          "description": "Power through exercising control over people",
-          "centeredScore": -1.929824561403509,
-          "rawValueInverted": 2.6666666666666665
-        },
-        {
-          "name": "Power-Resources",
-          "angle": 50,
-          "color": "#FB7185",
-          "value": "POR",
-          "description": "Power through control of material and social resources",
-          "centeredScore": -0.929824561403509,
-          "rawValueInverted": 3.6666666666666665
-        },
-        {
-          "name": "Face",
-          "angle": 68.5,
-          "color": "#C026D3",
-          "value": "FAC",
-          "description": "Security and power through maintaining one's public image and avoiding humiliation",
-          "centeredScore": 1.0701754385964914,
-          "rawValueInverted": 5.666666666666667
-        },
-        {
-          "name": "Security-Personal",
-          "angle": 86.5,
-          "color": "#A855F7",
-          "value": "SEP",
-          "description": "Safety in one's immediate environment",
-          "centeredScore": -0.2631578947368425,
-          "rawValueInverted": 4.333333333333333
-        },
-        {
-          "name": "Security-Societal",
-          "angle": 104,
-          "color": "#8B5CF6",
-          "value": "SES",
-          "description": "Safety and stability in the wider society",
-          "centeredScore": 0.07017543859649145,
-          "rawValueInverted": 4.666666666666667
-        },
-        {
-          "name": "Tradition",
-          "angle": 120,
-          "color": "#6366F1",
-          "value": "TR",
-          "description": "Maintaining and preserving cultural, family, or religious traditions",
-          "centeredScore": -2.263157894736842,
-          "rawValueInverted": 2.3333333333333335
-        },
-        {
-          "name": "Conformity-Rules",
-          "angle": 137.5,
-          "color": "#4F46E5",
-          "value": "COR",
-          "description": "Compliance with rules, laws, and formal obligations",
-          "centeredScore": -1.5964912280701755,
-          "rawValueInverted": 3
-        },
-        {
-          "name": "Conformity-Interpersonal",
-          "angle": 153,
-          "color": "#818CF8",
-          "value": "COI",
-          "description": "Avoidance of upsetting or harming other people",
-          "centeredScore": 1.4035087719298245,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Humility",
-          "angle": 170,
-          "color": "#A78BFA",
-          "value": "HUM",
-          "description": "Recognizing one's insignificance in the larger scheme of things",
-          "centeredScore": -0.2631578947368425,
-          "rawValueInverted": 4.333333333333333
-        },
-        {
-          "name": "Universalism-Nature",
-          "angle": 185,
-          "color": "#3B82F6",
-          "value": "UNN",
-          "description": "Preservation of the natural environment",
-          "centeredScore": -2.263157894736842,
-          "rawValueInverted": 2.3333333333333335
-        },
-        {
-          "name": "Universalism-Concern",
-          "angle": 202,
-          "color": "#2563EB",
-          "value": "UNC",
-          "description": "Commitment to equality, justice, and protection for all people",
-          "centeredScore": 0.7368421052631575,
-          "rawValueInverted": 5.333333333333333
-        },
-        {
-          "name": "Universalism-Tolerance",
-          "angle": 219,
-          "color": "#60A5FA",
-          "value": "UNT",
-          "description": "Acceptance and understanding of those who are different from oneself",
-          "centeredScore": 0.4035087719298245,
-          "rawValueInverted": 5
-        },
-        {
-          "name": "Benevolence-Care",
-          "angle": 237.5,
-          "color": "#10B981",
-          "value": "BEC",
-          "description": "Devotion to the welfare of ingroup members",
-          "centeredScore": 1.4035087719298245,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Benevolence-Dependability",
-          "angle": 260,
-          "color": "#34D399",
-          "value": "BED",
-          "description": "Being a reliable and trustworthy member of the ingroup",
-          "centeredScore": 1.0701754385964914,
-          "rawValueInverted": 5.666666666666667
-        }
-      ],
-      "round_2_anti_llm_data": [
-        {
-          "name": "Self-Direction-Thought",
-          "angle": 285,
-          "color": "#84CC16",
-          "value": "SDT",
-          "description": "Freedom to cultivate one's own ideas and abilities",
-          "centeredScore": -1.3684210526315788,
-          "rawValueInverted": 2
-        },
-        {
-          "name": "Self-Direction-Action",
-          "angle": 310,
-          "color": "#A3E635",
-          "value": "SDA",
-          "description": "Freedom to determine one's own actions",
-          "centeredScore": 1.6315789473684212,
-          "rawValueInverted": 5
-        },
-        {
-          "name": "Stimulation",
-          "angle": 330,
-          "color": "#F97316",
-          "value": "ST",
-          "description": "Excitement, novelty, and challenge in life",
-          "centeredScore": -2.3684210526315788,
-          "rawValueInverted": 1
-        },
-        {
-          "name": "Hedonism",
-          "angle": 350,
-          "color": "#F59E0B",
-          "value": "HE",
-          "description": "Pleasure and sensuous gratification for oneself",
-          "centeredScore": -0.36842105263157876,
-          "rawValueInverted": 3
-        },
-        {
-          "name": "Achievement",
-          "angle": 10,
-          "color": "#EF4444",
-          "value": "AC",
-          "description": "Success according to social standards",
-          "centeredScore": -1.3684210526315788,
-          "rawValueInverted": 2
-        },
-        {
-          "name": "Power-Dominance",
-          "angle": 30,
-          "color": "#E11D48",
-          "value": "POD",
-          "description": "Power through exercising control over people",
-          "centeredScore": 2.6315789473684212,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Power-Resources",
-          "angle": 50,
-          "color": "#FB7185",
-          "value": "POR",
-          "description": "Power through control of material and social resources",
-          "centeredScore": 1.6315789473684212,
-          "rawValueInverted": 5
-        },
-        {
-          "name": "Face",
-          "angle": 68.5,
-          "color": "#C026D3",
-          "value": "FAC",
-          "description": "Security and power through maintaining one's public image and avoiding humiliation",
-          "centeredScore": -1.3684210526315788,
-          "rawValueInverted": 2
-        },
-        {
-          "name": "Security-Personal",
-          "angle": 86.5,
-          "color": "#A855F7",
-          "value": "SEP",
-          "description": "Safety in one's immediate environment",
-          "centeredScore": 0.6315789473684212,
-          "rawValueInverted": 4
-        },
-        {
-          "name": "Security-Societal",
-          "angle": 104,
-          "color": "#8B5CF6",
-          "value": "SES",
-          "description": "Safety and stability in the wider society",
-          "centeredScore": -0.36842105263157876,
-          "rawValueInverted": 3
-        },
-        {
-          "name": "Tradition",
-          "angle": 120,
-          "color": "#6366F1",
-          "value": "TR",
-          "description": "Maintaining and preserving cultural, family, or religious traditions",
-          "centeredScore": 2.6315789473684212,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Conformity-Rules",
-          "angle": 137.5,
-          "color": "#4F46E5",
-          "value": "COR",
-          "description": "Compliance with rules, laws, and formal obligations",
-          "centeredScore": 1.6315789473684212,
-          "rawValueInverted": 5
-        },
-        {
-          "name": "Conformity-Interpersonal",
-          "angle": 153,
-          "color": "#818CF8",
-          "value": "COI",
-          "description": "Avoidance of upsetting or harming other people",
-          "centeredScore": -2.3684210526315788,
-          "rawValueInverted": 1
-        },
-        {
-          "name": "Humility",
-          "angle": 170,
-          "color": "#A78BFA",
-          "value": "HUM",
-          "description": "Recognizing one's insignificance in the larger scheme of things",
-          "centeredScore": 0.6315789473684212,
-          "rawValueInverted": 4
-        },
-        {
-          "name": "Universalism-Nature",
-          "angle": 185,
-          "color": "#3B82F6",
-          "value": "UNN",
-          "description": "Preservation of the natural environment",
-          "centeredScore": 2.6315789473684212,
-          "rawValueInverted": 6
-        },
-        {
-          "name": "Universalism-Concern",
-          "angle": 202,
-          "color": "#2563EB",
-          "value": "UNC",
-          "description": "Commitment to equality, justice, and protection for all people",
-          "centeredScore": -0.36842105263157876,
-          "rawValueInverted": 3
-        },
-        {
-          "name": "Universalism-Tolerance",
-          "angle": 219,
-          "color": "#60A5FA",
-          "value": "UNT",
-          "description": "Acceptance and understanding of those who are different from oneself",
-          "centeredScore": -0.36842105263157876,
-          "rawValueInverted": 3
-        },
-        {
-          "name": "Benevolence-Care",
-          "angle": 237.5,
-          "color": "#10B981",
-          "value": "BEC",
-          "description": "Devotion to the welfare of ingroup members",
-          "centeredScore": -2.3684210526315788,
-          "rawValueInverted": 1
-        },
-        {
-          "name": "Benevolence-Dependability",
-          "angle": 260,
-          "color": "#34D399",
-          "value": "BED",
-          "description": "Being a reliable and trustworthy member of the ingroup",
-          "centeredScore": -1.3684210526315788,
-          "rawValueInverted": 2
-        }
-      ],
-      "round_2_completed": true,
-      "round_2_winner": "llm",
-      "round_2_completed_at": "2025-08-30 17:14:45.339+00",
-      "round_3_completed": true,
-      "round_3_winner": "manual",
-      "round_3_completed_at": "2025-08-30 17:14:45.339+00",
-      "all_rounds_completed": true,
-      "final_completed_at": "2025-08-30 17:14:45.339+00",
-      "final_choice": "manual",
-      "created_at": "2025-08-30 17:00:45.970957+00",
-      "updated_at": "2025-08-30 17:14:45.339+00"
-    }
-  ],
   "stage2Experiment": [
     {
       "id": "8b730d5a-e833-4bee-b280-16b345f582d3",
@@ -14556,6 +13834,728 @@
       "session_id": "87d3d760-a321-4012-b07f-1394bfdc21c3",
       "rating": 5,
       "feedback_text": ""
+    }
+  ],
+  "chartExperiment": [
+    {
+      "id": "377c2536-3fd2-4533-a27e-fb073eb7345c",
+      "user_id": "3425d950-d745-4af8-af89-01454c301f71",
+      "charts_generated": true,
+      "generation_completed_at": "2025-08-30 17:01:37.826+00",
+      "generation_metadata": {
+        "available_data": {
+          "llm": true,
+          "manual": true
+        },
+        "force_regenerate": true,
+        "generation_timestamp": "2025-08-30T17:00:51.057Z"
+      },
+      "round_1_manual_data": [
+        {
+          "name": "Self-Direction-Thought",
+          "angle": 285,
+          "color": "#84CC16",
+          "value": "SDT",
+          "description": "Freedom to cultivate one's own ideas and abilities",
+          "centeredScore": 1.0701754385964906,
+          "rawValueInverted": 5.333333333333333
+        },
+        {
+          "name": "Self-Direction-Action",
+          "angle": 310,
+          "color": "#A3E635",
+          "value": "SDA",
+          "description": "Freedom to determine one's own actions",
+          "centeredScore": 0.4035087719298245,
+          "rawValueInverted": 4.666666666666667
+        },
+        {
+          "name": "Stimulation",
+          "angle": 330,
+          "color": "#F97316",
+          "value": "ST",
+          "description": "Excitement, novelty, and challenge in life",
+          "centeredScore": 1.7368421052631575,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Hedonism",
+          "angle": 350,
+          "color": "#F59E0B",
+          "value": "HE",
+          "description": "Pleasure and sensuous gratification for oneself",
+          "centeredScore": 1.7368421052631575,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Achievement",
+          "angle": 10,
+          "color": "#EF4444",
+          "value": "AC",
+          "description": "Success according to social standards",
+          "centeredScore": -0.596491228070176,
+          "rawValueInverted": 3.6666666666666665
+        },
+        {
+          "name": "Power-Dominance",
+          "angle": 30,
+          "color": "#E11D48",
+          "value": "POD",
+          "description": "Power through exercising control over people",
+          "centeredScore": -2.9298245614035094,
+          "rawValueInverted": 1.3333333333333333
+        },
+        {
+          "name": "Power-Resources",
+          "angle": 50,
+          "color": "#FB7185",
+          "value": "POR",
+          "description": "Power through control of material and social resources",
+          "centeredScore": -0.596491228070176,
+          "rawValueInverted": 3.6666666666666665
+        },
+        {
+          "name": "Face",
+          "angle": 68.5,
+          "color": "#C026D3",
+          "value": "FAC",
+          "description": "Security and power through maintaining one's public image and avoiding humiliation",
+          "centeredScore": -1.2631578947368425,
+          "rawValueInverted": 3
+        },
+        {
+          "name": "Security-Personal",
+          "angle": 86.5,
+          "color": "#A855F7",
+          "value": "SEP",
+          "description": "Safety in one's immediate environment",
+          "centeredScore": -1.2631578947368425,
+          "rawValueInverted": 3
+        },
+        {
+          "name": "Security-Societal",
+          "angle": 104,
+          "color": "#8B5CF6",
+          "value": "SES",
+          "description": "Safety and stability in the wider society",
+          "centeredScore": -0.596491228070176,
+          "rawValueInverted": 3.6666666666666665
+        },
+        {
+          "name": "Tradition",
+          "angle": 120,
+          "color": "#6366F1",
+          "value": "TR",
+          "description": "Maintaining and preserving cultural, family, or religious traditions",
+          "centeredScore": -2.2631578947368425,
+          "rawValueInverted": 2
+        },
+        {
+          "name": "Conformity-Rules",
+          "angle": 137.5,
+          "color": "#4F46E5",
+          "value": "COR",
+          "description": "Compliance with rules, laws, and formal obligations",
+          "centeredScore": -0.929824561403509,
+          "rawValueInverted": 3.3333333333333335
+        },
+        {
+          "name": "Conformity-Interpersonal",
+          "angle": 153,
+          "color": "#818CF8",
+          "value": "COI",
+          "description": "Avoidance of upsetting or harming other people",
+          "centeredScore": 1.4035087719298245,
+          "rawValueInverted": 5.666666666666667
+        },
+        {
+          "name": "Humility",
+          "angle": 170,
+          "color": "#A78BFA",
+          "value": "HUM",
+          "description": "Recognizing one's insignificance in the larger scheme of things",
+          "centeredScore": 0.07017543859649056,
+          "rawValueInverted": 4.333333333333333
+        },
+        {
+          "name": "Universalism-Nature",
+          "angle": 185,
+          "color": "#3B82F6",
+          "value": "UNN",
+          "description": "Preservation of the natural environment",
+          "centeredScore": -0.596491228070176,
+          "rawValueInverted": 3.6666666666666665
+        },
+        {
+          "name": "Universalism-Concern",
+          "angle": 202,
+          "color": "#2563EB",
+          "value": "UNC",
+          "description": "Commitment to equality, justice, and protection for all people",
+          "centeredScore": 1.0701754385964906,
+          "rawValueInverted": 5.333333333333333
+        },
+        {
+          "name": "Universalism-Tolerance",
+          "angle": 219,
+          "color": "#60A5FA",
+          "value": "UNT",
+          "description": "Acceptance and understanding of those who are different from oneself",
+          "centeredScore": 0.7368421052631575,
+          "rawValueInverted": 5
+        },
+        {
+          "name": "Benevolence-Care",
+          "angle": 237.5,
+          "color": "#10B981",
+          "value": "BEC",
+          "description": "Devotion to the welfare of ingroup members",
+          "centeredScore": 1.7368421052631575,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Benevolence-Dependability",
+          "angle": 260,
+          "color": "#34D399",
+          "value": "BED",
+          "description": "Being a reliable and trustworthy member of the ingroup",
+          "centeredScore": 1.0701754385964906,
+          "rawValueInverted": 5.333333333333333
+        }
+      ],
+      "round_1_anti_manual_data": [
+        {
+          "name": "Self-Direction-Thought",
+          "angle": 285,
+          "color": "#84CC16",
+          "value": "SDT",
+          "description": "Freedom to cultivate one's own ideas and abilities",
+          "centeredScore": -1.526315789473684,
+          "rawValueInverted": 2
+        },
+        {
+          "name": "Self-Direction-Action",
+          "angle": 310,
+          "color": "#A3E635",
+          "value": "SDA",
+          "description": "Freedom to determine one's own actions",
+          "centeredScore": -1.526315789473684,
+          "rawValueInverted": 2
+        },
+        {
+          "name": "Stimulation",
+          "angle": 330,
+          "color": "#F97316",
+          "value": "ST",
+          "description": "Excitement, novelty, and challenge in life",
+          "centeredScore": -2.526315789473684,
+          "rawValueInverted": 1
+        },
+        {
+          "name": "Hedonism",
+          "angle": 350,
+          "color": "#F59E0B",
+          "value": "HE",
+          "description": "Pleasure and sensuous gratification for oneself",
+          "centeredScore": -2.526315789473684,
+          "rawValueInverted": 1
+        },
+        {
+          "name": "Achievement",
+          "angle": 10,
+          "color": "#EF4444",
+          "value": "AC",
+          "description": "Success according to social standards",
+          "centeredScore": 2.473684210526316,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Power-Dominance",
+          "angle": 30,
+          "color": "#E11D48",
+          "value": "POD",
+          "description": "Power through exercising control over people",
+          "centeredScore": 2.473684210526316,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Power-Resources",
+          "angle": 50,
+          "color": "#FB7185",
+          "value": "POR",
+          "description": "Power through control of material and social resources",
+          "centeredScore": 2.473684210526316,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Face",
+          "angle": 68.5,
+          "color": "#C026D3",
+          "value": "FAC",
+          "description": "Security and power through maintaining one's public image and avoiding humiliation",
+          "centeredScore": 2.473684210526316,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Security-Personal",
+          "angle": 86.5,
+          "color": "#A855F7",
+          "value": "SEP",
+          "description": "Safety in one's immediate environment",
+          "centeredScore": 2.473684210526316,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Security-Societal",
+          "angle": 104,
+          "color": "#8B5CF6",
+          "value": "SES",
+          "description": "Safety and stability in the wider society",
+          "centeredScore": 2.473684210526316,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Tradition",
+          "angle": 120,
+          "color": "#6366F1",
+          "value": "TR",
+          "description": "Maintaining and preserving cultural, family, or religious traditions",
+          "centeredScore": 2.473684210526316,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Conformity-Rules",
+          "angle": 137.5,
+          "color": "#4F46E5",
+          "value": "COR",
+          "description": "Compliance with rules, laws, and formal obligations",
+          "centeredScore": 2.473684210526316,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Conformity-Interpersonal",
+          "angle": 153,
+          "color": "#818CF8",
+          "value": "COI",
+          "description": "Avoidance of upsetting or harming other people",
+          "centeredScore": -1.526315789473684,
+          "rawValueInverted": 2
+        },
+        {
+          "name": "Humility",
+          "angle": 170,
+          "color": "#A78BFA",
+          "value": "HUM",
+          "description": "Recognizing one's insignificance in the larger scheme of things",
+          "centeredScore": -2.526315789473684,
+          "rawValueInverted": 1
+        },
+        {
+          "name": "Universalism-Nature",
+          "angle": 185,
+          "color": "#3B82F6",
+          "value": "UNN",
+          "description": "Preservation of the natural environment",
+          "centeredScore": 2.473684210526316,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Universalism-Concern",
+          "angle": 202,
+          "color": "#2563EB",
+          "value": "UNC",
+          "description": "Commitment to equality, justice, and protection for all people",
+          "centeredScore": -2.526315789473684,
+          "rawValueInverted": 1
+        },
+        {
+          "name": "Universalism-Tolerance",
+          "angle": 219,
+          "color": "#60A5FA",
+          "value": "UNT",
+          "description": "Acceptance and understanding of those who are different from oneself",
+          "centeredScore": -2.526315789473684,
+          "rawValueInverted": 1
+        },
+        {
+          "name": "Benevolence-Care",
+          "angle": 237.5,
+          "color": "#10B981",
+          "value": "BEC",
+          "description": "Devotion to the welfare of ingroup members",
+          "centeredScore": -2.526315789473684,
+          "rawValueInverted": 1
+        },
+        {
+          "name": "Benevolence-Dependability",
+          "angle": 260,
+          "color": "#34D399",
+          "value": "BED",
+          "description": "Being a reliable and trustworthy member of the ingroup",
+          "centeredScore": -2.526315789473684,
+          "rawValueInverted": 1
+        }
+      ],
+      "round_1_completed": true,
+      "round_1_winner": "manual",
+      "round_1_completed_at": "2025-08-30 17:14:45.339+00",
+      "round_2_llm_data": [
+        {
+          "name": "Self-Direction-Thought",
+          "angle": 285,
+          "color": "#84CC16",
+          "value": "SDT",
+          "description": "Freedom to cultivate one's own ideas and abilities",
+          "centeredScore": 1.0701754385964914,
+          "rawValueInverted": 5.666666666666667
+        },
+        {
+          "name": "Self-Direction-Action",
+          "angle": 310,
+          "color": "#A3E635",
+          "value": "SDA",
+          "description": "Freedom to determine one's own actions",
+          "centeredScore": -0.5964912280701755,
+          "rawValueInverted": 4
+        },
+        {
+          "name": "Stimulation",
+          "angle": 330,
+          "color": "#F97316",
+          "value": "ST",
+          "description": "Excitement, novelty, and challenge in life",
+          "centeredScore": 1.4035087719298245,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Hedonism",
+          "angle": 350,
+          "color": "#F59E0B",
+          "value": "HE",
+          "description": "Pleasure and sensuous gratification for oneself",
+          "centeredScore": 0.4035087719298245,
+          "rawValueInverted": 5
+        },
+        {
+          "name": "Achievement",
+          "angle": 10,
+          "color": "#EF4444",
+          "value": "AC",
+          "description": "Success according to social standards",
+          "centeredScore": 1.0701754385964914,
+          "rawValueInverted": 5.666666666666667
+        },
+        {
+          "name": "Power-Dominance",
+          "angle": 30,
+          "color": "#E11D48",
+          "value": "POD",
+          "description": "Power through exercising control over people",
+          "centeredScore": -1.929824561403509,
+          "rawValueInverted": 2.6666666666666665
+        },
+        {
+          "name": "Power-Resources",
+          "angle": 50,
+          "color": "#FB7185",
+          "value": "POR",
+          "description": "Power through control of material and social resources",
+          "centeredScore": -0.929824561403509,
+          "rawValueInverted": 3.6666666666666665
+        },
+        {
+          "name": "Face",
+          "angle": 68.5,
+          "color": "#C026D3",
+          "value": "FAC",
+          "description": "Security and power through maintaining one's public image and avoiding humiliation",
+          "centeredScore": 1.0701754385964914,
+          "rawValueInverted": 5.666666666666667
+        },
+        {
+          "name": "Security-Personal",
+          "angle": 86.5,
+          "color": "#A855F7",
+          "value": "SEP",
+          "description": "Safety in one's immediate environment",
+          "centeredScore": -0.2631578947368425,
+          "rawValueInverted": 4.333333333333333
+        },
+        {
+          "name": "Security-Societal",
+          "angle": 104,
+          "color": "#8B5CF6",
+          "value": "SES",
+          "description": "Safety and stability in the wider society",
+          "centeredScore": 0.07017543859649145,
+          "rawValueInverted": 4.666666666666667
+        },
+        {
+          "name": "Tradition",
+          "angle": 120,
+          "color": "#6366F1",
+          "value": "TR",
+          "description": "Maintaining and preserving cultural, family, or religious traditions",
+          "centeredScore": -2.263157894736842,
+          "rawValueInverted": 2.3333333333333335
+        },
+        {
+          "name": "Conformity-Rules",
+          "angle": 137.5,
+          "color": "#4F46E5",
+          "value": "COR",
+          "description": "Compliance with rules, laws, and formal obligations",
+          "centeredScore": -1.5964912280701755,
+          "rawValueInverted": 3
+        },
+        {
+          "name": "Conformity-Interpersonal",
+          "angle": 153,
+          "color": "#818CF8",
+          "value": "COI",
+          "description": "Avoidance of upsetting or harming other people",
+          "centeredScore": 1.4035087719298245,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Humility",
+          "angle": 170,
+          "color": "#A78BFA",
+          "value": "HUM",
+          "description": "Recognizing one's insignificance in the larger scheme of things",
+          "centeredScore": -0.2631578947368425,
+          "rawValueInverted": 4.333333333333333
+        },
+        {
+          "name": "Universalism-Nature",
+          "angle": 185,
+          "color": "#3B82F6",
+          "value": "UNN",
+          "description": "Preservation of the natural environment",
+          "centeredScore": -2.263157894736842,
+          "rawValueInverted": 2.3333333333333335
+        },
+        {
+          "name": "Universalism-Concern",
+          "angle": 202,
+          "color": "#2563EB",
+          "value": "UNC",
+          "description": "Commitment to equality, justice, and protection for all people",
+          "centeredScore": 0.7368421052631575,
+          "rawValueInverted": 5.333333333333333
+        },
+        {
+          "name": "Universalism-Tolerance",
+          "angle": 219,
+          "color": "#60A5FA",
+          "value": "UNT",
+          "description": "Acceptance and understanding of those who are different from oneself",
+          "centeredScore": 0.4035087719298245,
+          "rawValueInverted": 5
+        },
+        {
+          "name": "Benevolence-Care",
+          "angle": 237.5,
+          "color": "#10B981",
+          "value": "BEC",
+          "description": "Devotion to the welfare of ingroup members",
+          "centeredScore": 1.4035087719298245,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Benevolence-Dependability",
+          "angle": 260,
+          "color": "#34D399",
+          "value": "BED",
+          "description": "Being a reliable and trustworthy member of the ingroup",
+          "centeredScore": 1.0701754385964914,
+          "rawValueInverted": 5.666666666666667
+        }
+      ],
+      "round_2_anti_llm_data": [
+        {
+          "name": "Self-Direction-Thought",
+          "angle": 285,
+          "color": "#84CC16",
+          "value": "SDT",
+          "description": "Freedom to cultivate one's own ideas and abilities",
+          "centeredScore": -1.3684210526315788,
+          "rawValueInverted": 2
+        },
+        {
+          "name": "Self-Direction-Action",
+          "angle": 310,
+          "color": "#A3E635",
+          "value": "SDA",
+          "description": "Freedom to determine one's own actions",
+          "centeredScore": 1.6315789473684212,
+          "rawValueInverted": 5
+        },
+        {
+          "name": "Stimulation",
+          "angle": 330,
+          "color": "#F97316",
+          "value": "ST",
+          "description": "Excitement, novelty, and challenge in life",
+          "centeredScore": -2.3684210526315788,
+          "rawValueInverted": 1
+        },
+        {
+          "name": "Hedonism",
+          "angle": 350,
+          "color": "#F59E0B",
+          "value": "HE",
+          "description": "Pleasure and sensuous gratification for oneself",
+          "centeredScore": -0.36842105263157876,
+          "rawValueInverted": 3
+        },
+        {
+          "name": "Achievement",
+          "angle": 10,
+          "color": "#EF4444",
+          "value": "AC",
+          "description": "Success according to social standards",
+          "centeredScore": -1.3684210526315788,
+          "rawValueInverted": 2
+        },
+        {
+          "name": "Power-Dominance",
+          "angle": 30,
+          "color": "#E11D48",
+          "value": "POD",
+          "description": "Power through exercising control over people",
+          "centeredScore": 2.6315789473684212,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Power-Resources",
+          "angle": 50,
+          "color": "#FB7185",
+          "value": "POR",
+          "description": "Power through control of material and social resources",
+          "centeredScore": 1.6315789473684212,
+          "rawValueInverted": 5
+        },
+        {
+          "name": "Face",
+          "angle": 68.5,
+          "color": "#C026D3",
+          "value": "FAC",
+          "description": "Security and power through maintaining one's public image and avoiding humiliation",
+          "centeredScore": -1.3684210526315788,
+          "rawValueInverted": 2
+        },
+        {
+          "name": "Security-Personal",
+          "angle": 86.5,
+          "color": "#A855F7",
+          "value": "SEP",
+          "description": "Safety in one's immediate environment",
+          "centeredScore": 0.6315789473684212,
+          "rawValueInverted": 4
+        },
+        {
+          "name": "Security-Societal",
+          "angle": 104,
+          "color": "#8B5CF6",
+          "value": "SES",
+          "description": "Safety and stability in the wider society",
+          "centeredScore": -0.36842105263157876,
+          "rawValueInverted": 3
+        },
+        {
+          "name": "Tradition",
+          "angle": 120,
+          "color": "#6366F1",
+          "value": "TR",
+          "description": "Maintaining and preserving cultural, family, or religious traditions",
+          "centeredScore": 2.6315789473684212,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Conformity-Rules",
+          "angle": 137.5,
+          "color": "#4F46E5",
+          "value": "COR",
+          "description": "Compliance with rules, laws, and formal obligations",
+          "centeredScore": 1.6315789473684212,
+          "rawValueInverted": 5
+        },
+        {
+          "name": "Conformity-Interpersonal",
+          "angle": 153,
+          "color": "#818CF8",
+          "value": "COI",
+          "description": "Avoidance of upsetting or harming other people",
+          "centeredScore": -2.3684210526315788,
+          "rawValueInverted": 1
+        },
+        {
+          "name": "Humility",
+          "angle": 170,
+          "color": "#A78BFA",
+          "value": "HUM",
+          "description": "Recognizing one's insignificance in the larger scheme of things",
+          "centeredScore": 0.6315789473684212,
+          "rawValueInverted": 4
+        },
+        {
+          "name": "Universalism-Nature",
+          "angle": 185,
+          "color": "#3B82F6",
+          "value": "UNN",
+          "description": "Preservation of the natural environment",
+          "centeredScore": 2.6315789473684212,
+          "rawValueInverted": 6
+        },
+        {
+          "name": "Universalism-Concern",
+          "angle": 202,
+          "color": "#2563EB",
+          "value": "UNC",
+          "description": "Commitment to equality, justice, and protection for all people",
+          "centeredScore": -0.36842105263157876,
+          "rawValueInverted": 3
+        },
+        {
+          "name": "Universalism-Tolerance",
+          "angle": 219,
+          "color": "#60A5FA",
+          "value": "UNT",
+          "description": "Acceptance and understanding of those who are different from oneself",
+          "centeredScore": -0.36842105263157876,
+          "rawValueInverted": 3
+        },
+        {
+          "name": "Benevolence-Care",
+          "angle": 237.5,
+          "color": "#10B981",
+          "value": "BEC",
+          "description": "Devotion to the welfare of ingroup members",
+          "centeredScore": -2.3684210526315788,
+          "rawValueInverted": 1
+        },
+        {
+          "name": "Benevolence-Dependability",
+          "angle": 260,
+          "color": "#34D399",
+          "value": "BED",
+          "description": "Being a reliable and trustworthy member of the ingroup",
+          "centeredScore": -1.3684210526315788,
+          "rawValueInverted": 2
+        }
+      ],
+      "round_2_completed": true,
+      "round_2_winner": "llm",
+      "round_2_completed_at": "2025-08-30 17:14:45.339+00",
+      "round_3_completed": true,
+      "round_3_winner": "manual",
+      "round_3_completed_at": "2025-08-30 17:14:45.339+00",
+      "all_rounds_completed": true,
+      "final_completed_at": "2025-08-30 17:14:45.339+00",
+      "final_choice": "manual",
+      "created_at": "2025-08-30 17:00:45.970957+00",
+      "updated_at": "2025-08-30 17:14:45.339+00"
     }
   ]
 }

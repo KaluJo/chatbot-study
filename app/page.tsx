@@ -28,7 +28,6 @@ function DemoLoadingOverlay() {
       <div className="flex flex-col items-center gap-3">
         <Sun className="h-12 w-12 text-primary animate-pulse" />
         <h1 className="text-2xl font-semibold tracking-tight">Talk to Day</h1>
-        <p className="text-sm text-muted-foreground">Loading demo experience...</p>
       </div>
       <div className="flex gap-1.5">
         {[0, 1, 2].map((i) => (

@@ -16,24 +16,28 @@ The survey system enables researchers to:
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                                                                  │
-│  Training  ──▶  Survey     ──▶  Stage 1  ──▶  Stage 2           │
-│  Modal          PVQ-RR         Topic-        Persona             │
-│                 Survey         Context       Embodiment          │
-│                                Graph                             │
+│  Training  ──▶  survey     ──▶  topics   ──▶  personas          │
+│  Modal          tab             tab           tab                │
+│                 PVQ-RR          Topic-        Persona            │
+│                 Survey          Context       Embodiment         │
+│                                 Graph         (Stage 2)          │
 │                    │                              │              │
 │                    ▼                              ▼              │
 │              ┌──────────┐                  ┌──────────────┐     │
-│              │ Generate │                  │   Stage 3    │     │
-│              │   LLM    │                  │    Chart     │     │
-│              │Predictions│                 │  Evaluation  │     │
-│              └──────────┘                  └──────────────┘     │
+│              │ Generate │                  │  evaluation  │     │
+│              │   LLM    │                  │  tab         │     │
+│              │Predictions│                 │  Chart Eval  │     │
+│              └──────────┘                  │  (Stage 3)   │     │
+│                                            └──────────────┘     │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## Stages
+## Tabs and Sections
 
-### Stage 0: Training Modal
+> "Stage 1 / 2 / 3" labels refer to the numbered section badges visible in the UI after completing the survey. The URL tab names are `survey`, `topics`, `personas`, and `evaluation`.
+
+### Training Modal (pre-survey)
 
 **Purpose**: Introduces participants to Schwartz values theory.
 
@@ -45,7 +49,7 @@ The survey system enables researchers to:
 
 **Location**: `components/survey/Stage0Modal.tsx`
 
-### Survey: PVQ-RR Survey
+### `survey` Tab: PVQ-RR Survey
 
 **Purpose**: Collect ground-truth value measurements.
 
@@ -65,7 +69,7 @@ The survey system enables researchers to:
 
 **Location**: `components/survey/survey-form.tsx`
 
-### Stage 1: Topic-Context Graph
+### `topics` Tab — Stage 1: Topic-Context Graph
 
 **Purpose**: Let participants explore AI-extracted values from their conversations.
 
@@ -76,7 +80,7 @@ The survey system enables researchers to:
 
 **Location**: `components/survey/ValuesGraphModal.tsx`
 
-### Stage 2: Persona Embodiment Experiment
+### `personas` Tab — Stage 2: Persona Embodiment Experiment
 
 **Purpose**: Test how well AI can embody user's values in novel situations.
 
@@ -91,7 +95,7 @@ The survey system enables researchers to:
 
 **Location**: `components/survey/Stage2Modal.tsx`
 
-### Stage 3: Chart Evaluation
+### `evaluation` Tab — Stage 3: Chart Evaluation
 
 **Purpose**: Direct comparison of manual vs. AI-predicted value charts.
 
@@ -102,7 +106,7 @@ The survey system enables researchers to:
 - Binary forced choice per round
 - Final preference recorded
 
-**Location**: `components/survey/Stage2Modal.tsx`
+**Location**: `components/survey/Stage3Modal.tsx`
 
 ## The 19 Schwartz Values
 
@@ -157,7 +161,7 @@ Each question gets:
 
 ### Chart Evaluation Service (`app/values/services/chart-evaluation-service.ts`)
 
-Manages Stage 3 experiment:
+Manages Stage 3 (Evaluation Tab) experiment:
 
 ```typescript
 getChartEvaluationData(userId): Promise<ChartEvaluationData>
@@ -174,7 +178,7 @@ generateAntiPersonChart(originalData): Promise<ProcessedValueResult[]>
 generateRandomChart(): ProcessedValueResult[]
 ```
 
-### Stage 2 Service (`app/values/services/stage2-service.ts`)
+### Stage 2 Service — Personas Tab (`app/values/services/stage2-service.ts`)
 
 Manages persona embodiment experiment:
 
@@ -329,7 +333,7 @@ Groups values by higher-order categories (Openness, Self-Enhancement, Conservati
 
 ### Modifying Experiments
 
-Stage 3 scenarios can be modified in `stage2-service.ts`:
+Persona Embodiment (personas tab) scenarios can be modified in `stage2-service.ts`:
 
 ```typescript
 const WVS_SCENARIOS = [
