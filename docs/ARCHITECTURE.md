@@ -100,12 +100,13 @@ components/
 │   ├── ChatInterface.tsx # Main chat component
 │   └── FeedbackModal.tsx # Post-session feedback
 │
-├── values/               # Survey UI components
+├── survey/               # Survey UI components
 │   ├── survey-form.tsx   # PVQ-RR question form
 │   ├── value-utils.ts    # Value processing logic
 │   ├── Stage0Modal.tsx   # Training introduction
-│   ├── Stage2Modal.tsx   # Persona embodiment
-│   ├── Stage2Modal.tsx   # Chart evaluation
+│   ├── ValuesGraphModal.tsx # Topics tab — Topic-Context Graph
+│   ├── Stage2Modal.tsx   # Personas tab — Persona embodiment
+│   ├── Stage3Modal.tsx   # Evaluation tab — Chart evaluation
 │   └── visualizations/   # Value chart visualizations
 │
 ├── visualization/        # Value Graph UI
@@ -221,10 +222,10 @@ Chat Messages (chatlog)
 │                      Survey Flow                             │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
-│  Training      Survey: PVQ-RR     Stage 1: Topic-Context    │
+│  Training      Survey tab (PVQ-RR)  Topics tab                │
 │  ┌──────────────┐     ┌──────────────┐    ┌──────────────┐  │
-│  │ Schwartz     │ ──▶ │ 57 Questions │ ──▶│ Explore      │  │
-│  │ Values Intro │     │ + 3 Custom   │    │ Value Graph  │  │
+│  │ Schwartz     │ ──▶ │ 57 Questions │ ──▶│ Topic-Context│  │
+│  │ Values Intro │     │ + 3 Custom   │    │ Graph        │  │
 │  └──────────────┘     └──────────────┘    └──────────────┘  │
 │                              │                               │
 │                              ▼                               │
@@ -237,8 +238,8 @@ Chat Messages (chatlog)
 │         ┌────────────────────┼────────────────────┐          │
 │         ▼                    ▼                    ▼          │
 │  ┌──────────────┐     ┌──────────────┐    ┌──────────────┐  │
-│  │ Stage 2:     │     │ Generate LLM │    │ Stage 3:     │  │
-│  │ Persona      │     │ Predictions  │    │ Chart        │  │
+│  │ Personas tab:│     │ Generate LLM │    │ Evaluation   │  │
+│  │ Persona      │     │ Predictions  │    │ tab: Chart   │  │
 │  │ Embodiment   │     │ (Gemini)     │    │ Evaluation   │  │
 │  └──────────────┘     └──────────────┘    └──────────────┘  │
 │                                                              │

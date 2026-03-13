@@ -688,7 +688,7 @@ export const Stage0Modal = ({ isOpen, onClose, onComplete }: Stage0ModalProps) =
     <Dialog open={isOpen}>
       <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto" ref={contentRef}>
         <DialogHeader>
-          <DialogTitle className="text-2xl">Stage 0: Learning About Values</DialogTitle>
+          <DialogTitle className="text-2xl">Learning About Values</DialogTitle>
           <DialogDescription className="text-base">
             {currentSlide === 0 ? (
               <>

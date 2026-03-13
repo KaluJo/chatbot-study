@@ -88,7 +88,7 @@ export async function getChartEvaluationData(userId: string): Promise<{
 }
 
 /**
- * Generate all charts for simplified Stage 1 experiment (2 rounds only)
+ * Generate all charts for the Evaluation Tab (Stage 3) experiment (2 rounds only)
  * @param userId - User ID
  * @param manualData - Manual survey data
  * @param llmBatchData - Not used anymore but kept for compatibility
@@ -328,7 +328,7 @@ export async function generateAndStoreAllCharts(
 }
 
 /**
- * Save Stage 1 completion results to database (simplified 3-round system)
+ * Save Stage 3 (Evaluation Tab) completion results to database (simplified 3-round system)
  */
 export async function saveStage3Results(
   userId: string,
@@ -384,11 +384,11 @@ export async function saveStage3Results(
       throw error;
     }
     
-    console.log('[Chart Evaluation] Saved Stage 1 results for user', userId, 'with', roundResults.length, 'rounds');
+    console.log('[Chart Evaluation] Saved Stage 3 results for user', userId, 'with', roundResults.length, 'rounds');
     return { success: true };
     
   } catch (error) {
-    console.error('Error saving Stage 1 results:', error);
+    console.error('Error saving Stage 3 results:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error'

@@ -27,10 +27,13 @@ Before you begin, ensure you have:
 
 Once your project is ready:
 
-1. Go to **Settings** → **API** in the left sidebar
+1. Go to **Settings** → **API Keys** in the left sidebar
 2. Copy these values (you'll need them for `.env.local`):
    - **Project URL**: `https://xxxxx.supabase.co`
-   - **anon public** key: `eyJhbGciOiJIUzI1NiIs...`
+   - **Publishable key** (`sb_publishable_...`) — used as `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - **Secret key** (`sb_secret_...`) — used as `SUPABASE_SERVICE_ROLE_KEY`, keep this private
+
+> **Note:** Older Supabase projects show JWT-format keys (`eyJhbGci...`). Both formats work — copy whichever your project shows.
 
 ## Step 2: Run the Database Setup Script
 
@@ -108,15 +111,18 @@ cp .env.example .env.local
 2. Open `.env.local` in your editor and fill in the values:
 
 ```bash
-# Required: Supabase (client-side, must be NEXT_PUBLIC_)
+# Required: Supabase (client-side URL and anon key are safe to expose)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...
+
+# Required: Supabase service role key (server-side only, NEVER expose publicly)
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
 
 # Required: Anthropic Claude (server-side only, NOT exposed to browser)
 ANTHROPIC_API_KEY=sk-ant-your-key
 CLAUDE_MODEL=claude-sonnet-4-20250514
 
-# Required: Google Gemini (server-side only)
+# Recommended: Google Gemini (server-side only)
 GEMINI_API_KEY=your-gemini-key
 GEMINI_MODEL=gemini-2.5-flash
 GEMINI_MODEL_PRO=gemini-2.5-pro
@@ -183,7 +189,8 @@ In Vercel, go to **Settings** → **Environment Variables** and add:
 | Variable | Value |
 |----------|-------|
 | `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase anon key |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase publishable key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Your Supabase secret key |
 | `ANTHROPIC_API_KEY` | Your Anthropic key |
 | `CLAUDE_MODEL` | `claude-sonnet-4-20250514` |
 | `GEMINI_API_KEY` | Your Gemini key |

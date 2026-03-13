@@ -849,9 +849,13 @@ Be thorough in your analysis and provide specific examples from the conversation
 }
 
 /**
- * Generate Stage 2 predictions: 3 batch predictions based on different chat history scopes
+ * @deprecated This function is dead code — it is not called anywhere in the codebase.
+ * It references the `user_stage2_predictions` table which does NOT exist in setup/database.sql.
+ * If you need multi-scope batch predictions in future, add the table to the schema first.
+ *
+ * Generate batch predictions based on different chat history scopes:
  * - First session only
- * - All sessions up to midpoint 
+ * - All sessions up to midpoint
  * - Full chat history
  */
 export async function generateStage2Predictions(

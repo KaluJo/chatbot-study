@@ -6,7 +6,7 @@ import { CircularVisualization, OverlayDataset } from '@/components/survey/visua
 import { Stage0Modal } from '@/components/survey/Stage0Modal'; // Import the Stage 0 modal
 import { Stage3Modal } from '@/components/survey/Stage3Modal'; // Stage 3: Chart Evaluation
 import { Stage2Modal } from '@/components/survey/Stage2Modal'; // Stage 2: Persona Embodiment
-import { ValuesGraphModal } from '@/components/survey/ValuesGraphModal'; // Import the values graph modal for Stage 2
+import { ValuesGraphModal } from '@/components/survey/ValuesGraphModal'; // Topics tab: topic-context graph modal
 import { Visualization } from '@/components/visualization/Visualization';
 import { VisualizationProvider } from '@/contexts/VisualizationContext';
 import { useAuth } from '@/contexts/AuthContext'; // Import useAuth
@@ -449,11 +449,11 @@ export default function SurveyPage() {
     });
   };
 
-  // Stage 3 Modal State (was Stage 2 - Persona Embodiment)
+  // Stage 2 (Personas Tab) — Persona Embodiment
   const [showStage2Modal, setShowStage2Modal] = useState(false);
   const [stage2Results, setStage2Results] = useState<any[] | null>(null);
 
-  // Stage 3 Modal State (was Stage 1 - Chart Evaluation)
+  // Stage 3 (Evaluation Tab) — Chart Evaluation
   const [showStage3Modal, setShowStage3Modal] = useState(false);
   const [stage3Selection, setStage3Selection] = useState<string[] | null>(null);
 
@@ -481,10 +481,10 @@ export default function SurveyPage() {
     }
   }, []);
 
-  // Stage 2 Values Graph Modal State
+  // Topics Tab — Values Graph Modal
   const [showValuesGraphModal, setShowValuesGraphModal] = useState(false);
 
-  // Stage 2 Values Graph Processing State
+  // Topics Tab — Values Graph Processing State
   const [isProcessingValuesGraph, setIsProcessingValuesGraph] = useState(false);
   const [valuesGraphProgress, setValuesGraphProgress] = useState<{ current: number; total: number; message: string } | null>(null);
   const [valuesGraphStatus, setValuesGraphStatus] = useState<{
@@ -494,14 +494,14 @@ export default function SurveyPage() {
     isChecking: boolean;
   }>({ totalWindows: 0, processedWindows: 0, unprocessedWindows: 0, isChecking: false });
 
-  // Stage 3 Pre-generation State (was Stage 2)
+  // Personas Tab (Stage 2) — Pre-generation State
   const [isStage2PreGenerating, setIsStage2PreGenerating] = useState(false);
   const [stage2PreGenProgress, setStage2PreGenProgress] = useState<{ progress: number; message: string } | null>(null);
   const [isStage2PreGenComplete, setIsStage2PreGenComplete] = useState(false);
   const [stage2PreGenError, setStage2PreGenError] = useState<string | null>(null);
   const [isResetting, setIsResetting] = useState(false);
 
-  // Stage 3 Validation State (was Stage 2)
+  // Personas Tab (Stage 2) — Validation State
   const [stage2ValidationStatus, setStage2ValidationStatus] = useState({
     hasUser: false,
     hasSurvey: false,
@@ -772,8 +772,8 @@ export default function SurveyPage() {
     // Demo mode: load chart & stage2 data from pre-fetched JSON
     if (isDemoMode && demoData) {
       if (!hasCheckedExistingData) {
-        if (demoData.stage1Experiment?.length) {
-          const chartData = demoData.stage1Experiment[0] as unknown as ChartEvaluationData;
+        if (demoData.chartExperiment?.length) {
+          const chartData = demoData.chartExperiment[0] as unknown as ChartEvaluationData;
           setChartEvaluationData(chartData);
           if (chartData.charts_generated) {
             setChartsReady(true);
@@ -838,7 +838,7 @@ export default function SurveyPage() {
           });
         }
 
-        // Update Stage 3 selection if already completed (was Stage 1)
+        // Restore Stage 3 (Evaluation Tab) completion if already done
         if (existingData.data.all_rounds_completed) {
           const completedRounds: string[] = [];
 
@@ -894,7 +894,7 @@ export default function SurveyPage() {
       data?.round_2_anti_llm_data;
   };
 
-  // Simplified chart generation logic - Stage 3 only requires LLM data
+  // Simplified chart generation logic - Evaluation Tab (Stage 3) only requires LLM data
   const hasRequiredData = !!llmData;
   const hasCompleteCharts = chartsReady && hasCompleteChartData(chartEvaluationData);
   const hasIncompleteCharts = chartEvaluationData?.charts_generated && !hasCompleteCharts;
@@ -1208,7 +1208,7 @@ export default function SurveyPage() {
     console.log('[Survey Page] Survey retaken, previous AI predictions cleared');
   };
 
-  // Stage 3 handlers (was Stage 1)
+  // Stage 3 (Evaluation Tab) handlers
   const handleBeginStage3 = () => {
     console.log('[Survey Page] Opening Stage 3 Modal with data:', {
       isStage3Ready,
@@ -1279,7 +1279,7 @@ export default function SurveyPage() {
     }
   };
 
-  // Function to refresh chart evaluation data after Stage 3 completion
+  // Refresh chart evaluation data after Stage 3 (Evaluation Tab) completion
   const refreshChartEvaluationData = async () => {
     if (user?.id) {
       try {
@@ -1607,7 +1607,7 @@ export default function SurveyPage() {
     }
   }, [user?.id, manualSurveyData, checkValuesGraphStatus]);
 
-  // Stage 3 handlers (was Stage 2 - Persona Experiment)
+  // Stage 2 (Personas Tab) handlers
   const handleBeginStage2 = () => {
     setShowStage2Modal(true);
   };
@@ -1618,10 +1618,10 @@ export default function SurveyPage() {
     // Refresh validation status to ensure UI reflects completion
     await checkStage2PreGenStatus();
 
-    console.log('[Survey Page] Stage 3 persona experiment completed:', results);
+    console.log('[Survey Page] Stage 2 persona experiment completed:', results);
   };
 
-  // Enhanced Stage 3 validation using the new simplified service (was Stage 2)
+  // Stage 2 (Personas Tab) validation
   const checkStage2PreGenStatus = useCallback(async () => {
     // Demo mode: use pre-loaded stage2 data and skip Supabase lookups
     if (isDemoMode && demoData) {
@@ -1771,7 +1771,7 @@ export default function SurveyPage() {
     }
   }, [user?.id, manualSurveyData, demoData]);
 
-  // Separate effect for Stage 3 validation that runs after manual survey loads
+  // Separate effect for Stage 2 (Personas Tab) validation that runs after manual survey loads
   useEffect(() => {
     if (user?.id && initialAuthCheckComplete) {
       checkStage2PreGenStatus();
@@ -1875,7 +1875,7 @@ export default function SurveyPage() {
     });
   }
 
-  // Check if Stage 3 is actually ready (more strict than just chartsReady) - was Stage 1
+  // Check if Stage 3 (Evaluation Tab) is actually ready (more strict than just chartsReady)
   const isStage3Ready = chartsReady && hasCompleteChartData(chartEvaluationData);
 
   // Display only the survey form if the user hasn't completed it yet
@@ -2022,7 +2022,7 @@ export default function SurveyPage() {
         </div>
       )}
 
-      {/* Stage 1: Survey Form */}
+      {/* Survey Tab: PVQ-RR Survey Form */}
       {showSurveyFormOnly ? (
         <div className="max-w-4xl mx-auto px-3 sm:px-4 pb-8">
           <div className="mb-6 p-3 sm:p-4 border rounded-lg bg-white border-gray-200">
@@ -2102,7 +2102,7 @@ export default function SurveyPage() {
             </>
           )}
 
-          {/* Stage 1: Completed Survey */}
+          {/* Survey Tab: Completed Survey */}
           {activeSurveyTab === 'survey' && manualSurveyData && !showRetakeSurvey && (
             <div className="mb-8">
               {!isDemoMode && (
@@ -2153,7 +2153,7 @@ export default function SurveyPage() {
             </div>
           )}
 
-          {/* Stage 1: Retaking Survey */}
+          {/* Survey Tab: Retaking Survey */}
           {activeSurveyTab === 'survey' && showRetakeSurvey && (
             <div className="mb-8">
               <div className="p-3 sm:p-4 border rounded-lg bg-white border-gray-200 mb-6">
@@ -2209,7 +2209,7 @@ export default function SurveyPage() {
             </div>
           )}
 
-          {/* Stage 2: Your Topic-Context Graph */}
+          {/* Topics Tab (Stage 1): Your Topic-Context Graph */}
           {activeSurveyTab === 'topics' && initialAuthCheckComplete && user && manualSurveyData && (
             <div className="mt-8 mb-8">
               <div className="p-3 sm:p-4 border rounded-lg bg-white border-gray-200">
@@ -2328,7 +2328,7 @@ export default function SurveyPage() {
             </div>
           )}
 
-          {/* Stage 3: Persona Embodiment Experiment (was Stage 2) */}
+          {/* Personas Tab (Stage 2): Persona Embodiment Experiment */}
           {activeSurveyTab === 'personas' && user && (
             <div className="mt-8 p-3 sm:p-4 border rounded-lg bg-white border-gray-200">
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
@@ -2574,7 +2574,7 @@ export default function SurveyPage() {
             </div>
           )}
 
-          {/* Stage 3: Value Chart Evaluation (was Stage 1) */}
+          {/* Evaluation Tab (Stage 3): Value Chart Evaluation */}
           {activeSurveyTab === 'evaluation' && (
             <div className="mt-8 p-3 sm:p-4 border rounded-lg bg-white border-gray-200">
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
@@ -3012,14 +3012,14 @@ export default function SurveyPage() {
         </div>
       )}
 
-      {/* Stage 0 Modal (Training) */}
+      {/* Training Modal (pre-survey intro) */}
       <Stage0Modal
         isOpen={showStage0Modal}
         onClose={() => setShowStage0Modal(false)}
         onComplete={handleStage0Complete}
       />
 
-      {/* Stage 3 Modal (Persona Embodiment) — skipped in demo mode (shown inline instead) */}
+      {/* Stage 2 Modal (Personas Tab — Persona Embodiment) — skipped in demo mode (shown inline instead) */}
       {user && !isDemoMode && (
         <Stage2Modal
           isOpen={showStage2Modal}
@@ -3028,7 +3028,7 @@ export default function SurveyPage() {
         />
       )}
 
-      {/* Stage 3 Modal (Chart Evaluation) */}
+      {/* Stage 3 Modal (Evaluation Tab — Chart Evaluation) */}
       <Stage3Modal
         isOpen={showStage3Modal}
         onClose={() => setShowStage3Modal(false)}
@@ -3036,7 +3036,7 @@ export default function SurveyPage() {
         onSelectionComplete={handleStage3RankingComplete}
       />
 
-      {/* Values Graph Modal for Stage 2 */}
+      {/* Values Graph Modal (Topics Tab) */}
       {user && (
         <ValuesGraphModal
           isOpen={showValuesGraphModal}

@@ -222,13 +222,13 @@ The survey system implements Schwartz's PVQ-RR (Portrait Values Questionnaire - 
 
 ### Survey Flow
 
-| Stage | Name | Description |
-|-------|------|-------------|
-| 0 | Training | Introduces Schwartz values theory |
-| 1 | PVQ-RR | 57 standardized questions + 3 user-generated questions |
-| 2 | Topic-Context Graph | Interactive exploration of AI-extracted values |
-| 3 | Persona Embodiment | Compare how well AI can respond as the user |
-| 4 | Chart Evaluation | Binary comparison of manual vs. AI-predicted value charts |
+| Tab | URL | Description |
+|-----|-----|-------------|
+| Training (modal) | — | Introduces Schwartz values theory before the survey begins |
+| Survey | `/values?tab=survey` | 57 PVQ-RR questions + 3 user-generated questions |
+| Topics | `/values?tab=topics` | Interactive Topic-Context Graph — AI-extracted values from conversations |
+| Personas | `/values?tab=personas` | Persona Embodiment — how well AI can respond as the user |
+| Evaluation | `/values?tab=evaluation` | Chart Evaluation — binary comparison of manual vs. AI-predicted value charts |
 
 ### Value Mapping
 

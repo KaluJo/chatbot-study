@@ -81,7 +81,7 @@ export interface DemoLlmBatchResponse {
   [key: string]: unknown;
 }
 
-export interface DemoStage1Experiment {
+export interface DemoChartExperiment {
   id: string;
   user_id: string;
   final_choice: string | null;
@@ -150,7 +150,7 @@ interface DemoDataContextType {
   pvqResponses: DemoPvqResponse[];
   llmIndividualResponses: DemoLlmIndividualResponse[];
   llmBatchResponses: DemoLlmBatchResponse[];
-  stage1Experiment: DemoStage1Experiment[];
+  chartExperiment: DemoChartExperiment[];
   stage2Experiment: DemoStage2Round[];
   conversationStrategies: DemoStrategy[];
   chatFeedback: DemoChatFeedback[];
@@ -175,7 +175,7 @@ export const DemoDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     pvqResponses: DemoPvqResponse[];
     llmIndividualResponses: DemoLlmIndividualResponse[];
     llmBatchResponses: DemoLlmBatchResponse[];
-    stage1Experiment: DemoStage1Experiment[];
+    chartExperiment: DemoChartExperiment[];
     stage2Experiment: DemoStage2Round[];
     conversationStrategies: DemoStrategy[];
     chatFeedback: DemoChatFeedback[];
@@ -194,7 +194,7 @@ export const DemoDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     pvqResponses: data.pvqResponses,
     llmIndividualResponses: data.llmIndividualResponses,
     llmBatchResponses: data.llmBatchResponses,
-    stage1Experiment: data.stage1Experiment,
+    chartExperiment: data.chartExperiment,
     stage2Experiment: data.stage2Experiment,
     conversationStrategies: data.conversationStrategies,
     chatFeedback: data.chatFeedback,
