@@ -17,7 +17,7 @@ export const metadata = {
     template: '%s | AI and My Values',
   },
   description:
-    "An interactive demo of the Day chatbot study — exploring how AI extracts, embodies, and explains human values through casual conversation. Published at CHI '26.",
+    "An interactive demo of the Day chatbot study that explores how AI extracts, embodies, and explains human values through casual conversation. Published at CHI '26.",
   keywords: [
     'AI values', 'value alignment', 'LLM', 'chatbot', 'human-AI interaction',
     'CHI 2026', 'VAPT', 'Day chatbot', 'conversational AI', 'ETH Zürich',
@@ -38,14 +38,14 @@ export const metadata = {
     locale: 'en_US',
     title: 'AI and My Values',
     description:
-      "An interactive demo of the Day chatbot study — exploring how AI extracts, embodies, and explains human values through casual conversation.",
+      "An interactive demo of the Day chatbot study that explores how AI extracts, embodies, and explains human values through casual conversation.",
     images: [{ url: '/opengraph-image.png', width: 1200, height: 600, alt: 'AI and My Values' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'AI and My Values',
     description:
-      "An interactive demo of the Day chatbot study — exploring how AI extracts, embodies, and explains human values through casual conversation.",
+      "An interactive demo of the Day chatbot study that explores how AI extracts, embodies, and explains human values through casual conversation.",
     images: [{ url: '/twitter-image.png', alt: 'AI and My Values' }],
     creator: '@bhadayun',
   },
@@ -65,7 +65,7 @@ const websiteJsonLd = {
   name: 'AI and My Values',
   url: siteUrl,
   description:
-    "An interactive demo of the Day chatbot study — exploring how AI extracts, embodies, and explains human values through casual conversation. Published at CHI '26.",
+    "An interactive demo of the Day chatbot study that explores how AI extracts, embodies, and explains human values through casual conversation. Published at CHI '26.",
   author: {
     '@type': 'Person',
     name: 'Bhada Yun',
