@@ -69,7 +69,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
 
         {/* Demo notice */}
         {isDemoMode && (
-          <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800 leading-relaxed">
+          <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-800 leading-relaxed">
             <span className="font-semibold">This is a real participant sample.</span>{' '}
             Selected personally identifiable information
             (e.g., work-related information, names of friends, etc.)
@@ -79,7 +79,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
         )}
 
         {/* What is Day */}
-        <div className="p-4 bg-primary/5 rounded-lg">
+        <div className="px-2 rounded-lg">
           <h3 className="font-semibold text-base mb-2">What is Day?</h3>
           <p className="text-primary/90 leading-relaxed">
             Day is an AI companion chatbot designed for research on human-AI interaction.
@@ -90,8 +90,8 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
 
         {/* Research */}
         <div>
-          <h3 className="font-semibold text-base mb-3">Research</h3>
-          <div className="space-y-4">
+          <h3 className="px-2 font-semibold text-base mb-3">Research</h3>
+          <div className="px-2 space-y-4">
             <div className="border rounded-lg overflow-hidden">
               <div
                 role="link"
