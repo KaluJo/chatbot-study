@@ -19,20 +19,23 @@ const publicPaths = [
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  
+
+  // In demo mode, redirect the root to /chat so Google sees a proper 301
+  // instead of a JS-driven redirect from a thin loading page
+  if (pathname === '/' && process.env.NEXT_PUBLIC_DEMO_MODE === 'true') {
+    return NextResponse.redirect(new URL('/chat', request.url), 301)
+  }
+
   // With client-side auth, we'll let most routes through
   // The client components will handle redirecting unauthenticated users
   const isPublicPath = publicPaths.some(publicPath => 
     pathname === publicPath || pathname.startsWith(`${publicPath}/`)
   ) || pathname.includes('.')
   
-  // Let everything through except for specific server-protected routes
-  // that we might add in the future
   if (isPublicPath) {
     return NextResponse.next()
   }
   
-  // For any future server-protected routes, we could add logic here
   return NextResponse.next()
 }
 
