@@ -7,18 +7,20 @@ export const metadata: Metadata = {
   description:
     'Talk with Day — an AI companion from a CHI \'26 research study. Experience how a chatbot learns about your values through casual conversation.',
   alternates: {
-    canonical: `${siteUrl}/chat`,
+    // Root 301s to /chat in demo mode, so use root as canonical to consolidate signals
+    canonical: siteUrl,
   },
   openGraph: {
     type: 'website',
-    url: `${siteUrl}/chat`,
+    url: siteUrl,
     title: 'Chat with Day | AI and My Values',
     description:
       'Talk with Day — an AI companion from a CHI \'26 research study. Experience how a chatbot learns about your values through casual conversation.',
   },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
   },
 };
 
