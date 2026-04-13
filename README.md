@@ -14,7 +14,7 @@
 
 This repository accompanies our research papers on understanding how AI chatbots extract, embody, and explain human values, and how agency manifests in sustained human-AI conversation. It contains the complete research toolkit including the "Day" conversational AI companion, PVQ-RR survey implementation, Topic-Context Graph visualization, and interview probe systems.
 
-**[AI and My Values (CHI '26)](https://doi.org/10.1145/3772318.3790566)** · **[Does My Chatbot Have an Agenda? (CHI '26)](https://doi.org/10.1145/3772318.3791620)**
+**[AI and My Values (CHI '26)](https://dl.acm.org/doi/10.1145/3772318.3790566)** · **[Does My Chatbot Have an Agenda? (CHI '26)](https://dl.acm.org/doi/10.1145/3772318.3791620)**
 
 </div>
 

@@ -543,7 +543,7 @@ export default function ChattyPage() {
               </p>
               <div className="flex items-center justify-between mt-4">
                 <a
-                  href="https://arxiv.org/abs/2601.22452"
+                  href="https://dl.acm.org/doi/10.1145/3772318.3791620"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-800 underline underline-offset-2 transition-colors"
@@ -811,7 +811,7 @@ export default function ChattyPage() {
                 <p className="text-gray-400 text-xs max-w-sm mx-auto mt-4 leading-relaxed">
                   To hear what participants thought about how Day adapted its language and tone to different people, see{' '}
                   <a
-                    href="https://arxiv.org/abs/2601.22452"
+                    href="https://dl.acm.org/doi/10.1145/3772318.3791620"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline hover:text-gray-600 transition-colors"

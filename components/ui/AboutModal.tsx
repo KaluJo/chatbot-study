@@ -96,8 +96,8 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
               <div
                 role="link"
                 tabIndex={0}
-                onClick={() => window.open('https://arxiv.org/abs/2601.22440', '_blank', 'noopener,noreferrer')}
-                onKeyDown={e => e.key === 'Enter' && window.open('https://arxiv.org/abs/2601.22440', '_blank', 'noopener,noreferrer')}
+                onClick={() => window.open('https://dl.acm.org/doi/10.1145/3772318.3790566', '_blank', 'noopener,noreferrer')}
+                onKeyDown={e => e.key === 'Enter' && window.open('https://dl.acm.org/doi/10.1145/3772318.3790566', '_blank', 'noopener,noreferrer')}
                 className="block p-3 hover:bg-muted/50 transition-colors cursor-pointer"
               >
                 <p className="font-medium text-sm flex items-center gap-1">
@@ -133,8 +133,8 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
               <div
                 role="link"
                 tabIndex={0}
-                onClick={() => window.open('https://arxiv.org/abs/2601.22452', '_blank', 'noopener,noreferrer')}
-                onKeyDown={e => e.key === 'Enter' && window.open('https://arxiv.org/abs/2601.22452', '_blank', 'noopener,noreferrer')}
+                onClick={() => window.open('https://dl.acm.org/doi/10.1145/3772318.3791620', '_blank', 'noopener,noreferrer')}
+                onKeyDown={e => e.key === 'Enter' && window.open('https://dl.acm.org/doi/10.1145/3772318.3791620', '_blank', 'noopener,noreferrer')}
                 className="block p-3 hover:bg-muted/50 transition-colors cursor-pointer"
               >
                 <p className="font-medium text-sm flex items-center gap-1">
