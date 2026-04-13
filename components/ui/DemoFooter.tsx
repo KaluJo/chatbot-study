@@ -26,11 +26,11 @@ export function DemoFooter() {
             <GithubIcon className="h-3 w-3" /> GitHub
           </a>
           <span className="hidden sm:inline">·</span>
-          <a href="https://arxiv.org/abs/2601.22440" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-gray-700 transition-colors">
+          <a href="https://dl.acm.org/doi/10.1145/3772318.3790566" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-gray-700 transition-colors">
             AI and My Values <ExternalLink className="h-2.5 w-2.5" />
           </a>
           <span className="hidden sm:inline">·</span>
-          <a href="https://arxiv.org/abs/2601.22452" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-gray-700 transition-colors">
+          <a href="https://dl.acm.org/doi/10.1145/3772318.3791620" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-gray-700 transition-colors">
             Does My Chatbot Have an Agenda? <ExternalLink className="h-2.5 w-2.5" />
           </a>
         </div>

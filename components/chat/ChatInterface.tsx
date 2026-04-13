@@ -1012,7 +1012,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onChatStateChange }) => {
             <h3 className="font-semibold text-base mb-3">Research</h3>
             <div className="space-y-4">
               <a
-                href="https://arxiv.org/abs/2601.22440"
+                href="https://dl.acm.org/doi/10.1145/3772318.3790566"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block border rounded-lg p-3 hover:bg-muted/50 transition-colors cursor-pointer"
@@ -1028,7 +1028,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onChatStateChange }) => {
                 </p>
               </a>
               <a
-                href="https://arxiv.org/abs/2601.22452"
+                href="https://dl.acm.org/doi/10.1145/3772318.3791620"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block border rounded-lg p-3 hover:bg-muted/50 transition-colors cursor-pointer"
