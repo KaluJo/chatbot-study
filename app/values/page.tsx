@@ -2074,7 +2074,7 @@ export default function SurveyPage() {
                 </p>
                 <div className="flex items-center justify-between mt-4">
                   <a
-                    href="https://arxiv.org/abs/2601.22440"
+                    href="https://dl.acm.org/doi/10.1145/3772318.3790566"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-800 underline underline-offset-2 transition-colors"

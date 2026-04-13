@@ -41,8 +41,8 @@ const agencyJsonLd = {
   headline: 'Does My Chatbot Have an Agenda?',
   description:
     'A month-long longitudinal study with 22 adults who chatted with "Day", an LLM companion. We discover agency manifests as an emergent, shared experience co-constructed turn-by-turn.',
-  url: 'https://arxiv.org/abs/2601.22452',
-  sameAs: ['https://arxiv.org/abs/2601.22452'],
+  url: 'https://dl.acm.org/doi/10.1145/3772318.3791620',
+  sameAs: ['https://dl.acm.org/doi/10.1145/3772318.3791620'],
   datePublished: '2026-01-01',
   author: [
     { '@type': 'Person', name: 'Bhada Yun', url: 'https://www.bhadayun.com', affiliation: { '@type': 'Organization', name: 'ETH Zürich' } },
