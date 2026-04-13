@@ -42,8 +42,8 @@ const valuesJsonLd = {
   headline: 'AI and My Values',
   description:
     "Does AI understand human values? We introduce VAPT, the Value-Alignment Perception Toolkit. 20 participants texted a chatbot over a month; 13 left convinced AI can understand human values.",
-  url: 'https://arxiv.org/abs/2601.22440',
-  sameAs: ['https://arxiv.org/abs/2601.22440'],
+  url: 'https://dl.acm.org/doi/10.1145/3772318.3791620',
+  sameAs: ['https://dl.acm.org/doi/10.1145/3772318.3791620'],
   datePublished: '2026-01-01',
   author: [
     { '@type': 'Person', name: 'Bhada Yun', url: 'https://bhadayun.com', affiliation: { '@type': 'Organization', name: 'ETH Zürich' } },
