@@ -20,16 +20,7 @@ async function callGeminiAPI(prompt: string, responseSchema?: unknown): Promise<
   const data = await response.json();
 
   if (!response.ok) {
-    if (response.status === 429) {
-      const retryAfter = data.retryAfter || 60;
-      throw new Error(
-        `Rate limit exceeded. Free tier limits reached. ` +
-        `Add billing at console.cloud.google.com to increase quota. Retry in ${retryAfter}s.`
-      );
-    }
-    if (response.status === 503) {
-      throw new Error(`AI service not configured. Add GEMINI_API_KEY to your environment.`);
-    }
+    
     throw new Error(data.error || `API error: ${response.status}`);
   }
 
