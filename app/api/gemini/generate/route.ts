@@ -107,7 +107,13 @@ export async function POST(request: NextRequest) {
       geminiConfig.thinkingConfig = { thinkingBudget };
     }
 
-    const ai = new GoogleGenAI({ apiKey });
+    const customBaseUrl = process.env.GEMINI_BASE_URL || process.env.GOOGLE_BASE_URL;
+
+// 初始化时传入自定义的 baseUrl
+const ai = new GoogleGenAI({ 
+  apiKey,
+  ...(customBaseUrl ? { httpOptions: { baseUrl: customBaseUrl } } : {})
+});
     
     if (isUserKey) {
       console.log('[API/Gemini] Using user-provided API key');
