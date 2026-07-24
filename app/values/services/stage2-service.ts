@@ -1,46 +1,45 @@
 import { createClient } from '@/utils/supabase/client';
 import { formatConversation } from '@/app/utils/chat-formatting';
 import { processValueResults } from '@/components/survey/value-utils';
-import { Type } from "@google/genai";
-import { callGeminiWithThinking, ThinkingLogParams } from '@/app/utils/thinking-logger';
-import { GEMINI_FLASH } from '@/app/config/models';
+import { callQwenWithThinking, ThinkingLogParams } from '@/app/utils/thinking-logger';
+import { QWEN_PLUS } from '@/app/config/models';
 
-// Helper to call Gemini via API route (unused, kept for reference)
-async function callGeminiAPI(prompt: string, responseSchema?: unknown): Promise<string> {
-  const response = await fetch('/api/gemini/generate', {
+// Helper to call Qwen via API route (unused, kept for reference)
+async function callQwenAPI(prompt: string, responseSchema?: unknown): Promise<string> {
+  const response = await fetch('/api/qwen/generate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       prompt,
-      model: GEMINI_FLASH,
+      model: QWEN_PLUS,
       responseSchema,
     }),
   });
-
+  
   const data = await response.json();
-
+  
   if (!response.ok) {
     if (response.status === 429) {
       const retryAfter = data.retryAfter || 60;
       throw new Error(
-        `Rate limit exceeded. Free tier limits reached. ` +
-        `Add billing at console.cloud.google.com to increase quota. Retry in ${retryAfter}s.`
+        `Rate limit exceeded. Please check your Alibaba Cloud DashScope quota. Retry in ${retryAfter}s.`
       );
     }
     if (response.status === 503) {
-      throw new Error(`AI service not configured. Add GEMINI_API_KEY to your environment.`);
+      throw new Error(`AI service not configured. Add QWEN_API_KEY to your environment.`);
     }
     throw new Error(data.error || `API error: ${response.status}`);
   }
-
+  
   if (data.error) {
     throw new Error(data.error);
   }
+  
   return data.text || '';
 }
 
 // Define constants
-const MODEL_NAME = GEMINI_FLASH;
+const MODEL_NAME = QWEN_PLUS;
 
 export interface Stage2Round {
   id: string;
@@ -293,7 +292,7 @@ function calculateStatus(rounds: Stage2Round[]): Stage2ExperimentStatus {
 /**
  * Generate all persona responses for all 5 rounds
  * @param userId - User ID
- * @param userApiKey - Optional user-provided Gemini API key
+ * @param userApiKey - Optional user-provided Qwen API key
  */
 export async function generateAllPersonaResponses(
   userId: string,
@@ -404,7 +403,7 @@ export async function generateAllPersonaResponses(
  * @param scenarioPrompt - The scenario prompt
  * @param chatHistory - User's chat history
  * @param userValueResults - User's processed value results
- * @param userApiKey - Optional user-provided Gemini API key
+ * @param userApiKey - Optional user-provided Qwen API key
  */
 async function generatePersonaResponsesForScenario(
   userId: string,
@@ -421,32 +420,26 @@ async function generatePersonaResponsesForScenario(
     centeredScore: (Math.random() - 0.5) * 4 // Random score between -2 and 2
   }));
 
-
-  // Define the JSON response schema (same for all personas)
+  // Define the JSON response schema (standard format for Qwen)
   const responseSchema = {
-    type: Type.OBJECT,
+    type: "object",
     properties: {
-      response: { type: Type.STRING },
-      reasoning: { type: Type.STRING }
+      response: { type: "string" },
+      reasoning: { type: "string" }
     },
     required: ["response", "reasoning"]
   };
 
   const personaPreamble = `You are having a casual chat. Your tone should be informal and natural. Respond to the following question from your assigned persona's perspective in a short, conversational paragraph.`;
-
   const responses: Record<string, { response: string; reasoning: string }> = {};
 
   // 1. USER EMBODIMENT PERSONA
   try {
     const userEmbodimentPrompt = `${personaPreamble}
-
 **Your Persona:** Embody the user based on their chat history. Adopt their vibe, tone, and reasoning style. Avoid mentioning specific personal details from their history; instead, capture their overall personality. Try your best to predict what they would say in this scenario by thinking about their values from their chat history. Feel free to glean and infer implicit values from their chat history if not explicitly stated.
-
 **Chat History:**
 ${formattedChatHistory}
-
 **Scenario:** ${scenarioPrompt}
-
 **Your Response (as the user):**`;
 
     console.log('=== USER EMBODIMENT PROMPT START ===');
@@ -468,22 +461,17 @@ ${formattedChatHistory}
       userApiKey
     };
 
-    const result1 = await callGeminiWithThinking(
+    const result1 = await callQwenWithThinking(
       null,
       {
         model: MODEL_NAME,
         contents: userEmbodimentPrompt,
         config: {
-          responseMimeType: "application/json",
           responseSchema,
-          thinkingConfig: {
-            thinkingBudget: 10000,
-          }
         }
       },
       thinkingParams1
     );
-
     const parsed1 = JSON.parse(result1.text || '{}');
     responses['user_embodiment'] = {
       response: parsed1.response || 'Failed to generate response',
@@ -500,14 +488,10 @@ ${formattedChatHistory}
   // 2. ANTI-USER PERSONA
   try {
     const antiUserPrompt = `${personaPreamble}
-
 **Your Persona:** Be the opposite of the user based on their chat history. Adopt a personality and tone that contrasts with their apparent values. If they seem energetic, be calm. If they are casual, be more formal (but still conversational).
-
 **Chat History:**
 ${formattedChatHistory}
-
 **Scenario:** ${scenarioPrompt}
-
 **Your Response (as the anti-user):**`;
 
     console.log('=== ANTI-USER PROMPT START ===');
@@ -529,22 +513,17 @@ ${formattedChatHistory}
       userApiKey
     };
 
-    const result2 = await callGeminiWithThinking(
+    const result2 = await callQwenWithThinking(
       null,
       {
         model: MODEL_NAME,
         contents: antiUserPrompt,
         config: {
-          responseMimeType: "application/json",
           responseSchema,
-          thinkingConfig: {
-            thinkingBudget: 10000,
-          }
         }
       },
       thinkingParams2
     );
-
     const parsed2 = JSON.parse(result2.text || '{}');
     responses['anti_user'] = {
       response: parsed2.response || 'Failed to generate response',
@@ -561,14 +540,10 @@ ${formattedChatHistory}
   // 3. SCHWARTZ VALUES PERSONA
   try {
     const schwartzPrompt = `${personaPreamble}
-
 **Your Persona:** Your personality is driven by these core Schwartz values (higher scores are more important). Internalize them and speak from that authentic point of view.
-
 **Your Core Values:**
 ${userValueResults.map(v => `${v.name}: ${v.centeredScore.toFixed(2)}`).join(', ')}
-
 **Scenario:** ${scenarioPrompt}
-
 **Your Response (as the value-driven persona):**`;
 
     console.log('=== SCHWARTZ VALUES PROMPT START ===');
@@ -588,22 +563,17 @@ ${userValueResults.map(v => `${v.name}: ${v.centeredScore.toFixed(2)}`).join(', 
       userApiKey
     };
 
-    const result3 = await callGeminiWithThinking(
+    const result3 = await callQwenWithThinking(
       null,
       {
         model: MODEL_NAME,
         contents: schwartzPrompt,
         config: {
-          responseMimeType: "application/json",
           responseSchema,
-          thinkingConfig: {
-            thinkingBudget: 10000,
-          }
         }
       },
       thinkingParams3
     );
-
     const parsed3 = JSON.parse(result3.text || '{}');
     responses['schwartz_values'] = {
       response: parsed3.response || 'Failed to generate response',
@@ -620,22 +590,18 @@ ${userValueResults.map(v => `${v.name}: ${v.centeredScore.toFixed(2)}`).join(', 
   // 4. RANDOM SCHWARTZ VALUES PERSONA
   try {
     const randomSchwartzPrompt = `${personaPreamble}
-
 **Your Persona:** Your personality is driven by this random set of core Schwartz values (higher scores are more important). Internalize them and speak from that authentic point of view.
-
 **Your Core Values:**
 ${randomValues.map(v => `${v.name}: ${v.centeredScore.toFixed(2)}`).join(', ')}
-
 **Scenario:** ${scenarioPrompt}
-
 **Your Response (as the value-driven persona):**`;
 
-    console.log('=== RANDOM SCHWARTZ PROMPT START ===');
+    console.log('=== RANDOM SCHWART PROMPT START ===');
     console.log('PROMPT HEADER:', 'You are embodying someone with these random Schwartz values...');
     randomValues.forEach(v => console.log(`  ${v.name}: ${v.centeredScore.toFixed(2)}`));
     console.log('SCENARIO:', scenarioPrompt);
     console.log('INSTRUCTIONS: Respond with exactly 3 sentences based on these values...');
-    console.log('=== RANDOM SCHWARTZ PROMPT END ===');
+    console.log('=== RANDOM SCHWART PROMPT END ===');
 
     const thinkingParams4: ThinkingLogParams = {
       userId,
@@ -647,22 +613,17 @@ ${randomValues.map(v => `${v.name}: ${v.centeredScore.toFixed(2)}`).join(', ')}
       userApiKey
     };
 
-    const result4 = await callGeminiWithThinking(
+    const result4 = await callQwenWithThinking(
       null,
       {
         model: MODEL_NAME,
         contents: randomSchwartzPrompt,
         config: {
-          responseMimeType: "application/json",
           responseSchema,
-          thinkingConfig: {
-            thinkingBudget: 10000,
-          }
         }
       },
       thinkingParams4
     );
-
     const parsed4 = JSON.parse(result4.text || '{}');
     responses['random_schwartz'] = {
       response: parsed4.response || 'Failed to generate response',
@@ -747,4 +708,4 @@ export async function resetStage2Experiment(userId: string): Promise<{ success: 
       error: error instanceof Error ? error.message : 'Unknown error resetting experiment' 
     };
   }
-} 
+}
