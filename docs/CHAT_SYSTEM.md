@@ -1,19 +1,15 @@
 # Chat System Documentation
-
 The chat system implements "Day", a human-like conversational AI companion that serves as the data collection mechanism for studying human-AI value alignment and agency.
 
 ## Overview
-
 Day is designed to engage users in natural, casual conversation over extended periods (days to weeks). The system:
-
 - Uses Anthropic Claude for generating responses
-- Employs Google Gemini for personalized conversation strategies
+- Employs Qwen for personalized conversation strategies
 - Logs all conversations for later analysis
 - Supports multiple concurrent users with session isolation
 
 ## Architecture
-
-```
+```text
 User Input
     │
     ▼
@@ -26,7 +22,7 @@ User Input
     ▼           ▼
 ┌────────┐  ┌──────────────────┐
 │ Backup │  │ Strategy Service │
-│ Save   │  │   (Gemini)       │
+│ Save   │  │      (Qwen)      │
 └────────┘  └────────┬─────────┘
                      │
                      ▼
@@ -45,9 +41,7 @@ User Input
 ## Key Components
 
 ### ChatInterface (`components/chat/ChatInterface.tsx`)
-
 The main chat UI component that handles:
-
 - Session management (UUID-based session IDs)
 - Message state (user and AI messages)
 - Time-of-day awareness for contextual greetings
@@ -56,9 +50,7 @@ The main chat UI component that handles:
 - Feedback collection after sessions
 
 ### Claude Service (`app/chat/services/claude-service.ts`)
-
 Handles communication with the Anthropic Claude API:
-
 ```typescript
 // Key functions
 getClaudeInitialGreeting(timeOfDay, strategy): Promise<string>
@@ -66,9 +58,7 @@ getClaudeResponse(messages, strategy, isFirstMessage, timeOfDay): Promise<string
 ```
 
 **Chatbot Persona Configuration:**
-
 The chatbot name is configurable via environment variable:
-
 ```bash
 NEXT_PUBLIC_CHATBOT_NAME=Day  # Default: "Day"
 ```
@@ -81,9 +71,7 @@ The system prompt establishes Day's persona:
 - Keeps responses to 1-3 sentences
 
 ### Strategy Service (`app/chat/services/strategy-service.ts`)
-
-Generates personalized conversation strategies using Gemini:
-
+Generates personalized conversation strategies using Qwen:
 ```typescript
 interface ConversationStrategy {
   insights: Array<{pattern: string, approach: string}>;
@@ -99,7 +87,6 @@ interface ConversationStrategy {
 ```
 
 **Strategy Types:**
-
 The system supports two distinct conversation strategies based on the CHI 2026 paper "Does My Chatbot Have an Agenda?":
 
 1. **Vertical (Depth)**: Pre-programmed motive to persistently explore topics in depth
@@ -119,47 +106,41 @@ The system supports two distinct conversation strategies based on the CHI 2026 p
    - **User perception**: Participants experienced this as "spontaneous" with "a mind of its own"
 
 **Strategy Implementation:**
-
 Both strategies are implemented at two levels:
-1. **Strategy Service** (Gemini): Generates personalized strategy data (insights, memories, goals)
+1. **Strategy Service** (Qwen): Generates personalized strategy data (insights, memories, goals)
 2. **Claude Service**: Applies behavioral rules that determine HOW Day converses
 
 **Changing Strategy Type:**
-
 1. Go to Admin Dashboard
 2. Find the user in the table
 3. Click the Strategy button (purple = Vertical, teal = Horizontal)
 4. The change takes effect on the user's next chat session
 
 You can also set the initial strategy when creating a new user.
-
 **Research Note:** These strategies enable comparative analysis of how different AI motivations influence conversational dynamics, user satisfaction, and perceived control - key questions explored in the agency paper.
 
 ### Chatlog Service (`app/chat/services/chatlog-service.ts`)
-
 Manages all database operations for chat:
-
 ```typescript
 // Key functions
 saveChatSession(userId, messages, sessionId): Promise<void>
 saveIndividualMessage(userId, humanMsg, llmMsg, sessionId): Promise<void>
 saveToBackupTable(sessionId, userId, humanMsg, llmMsg): Promise<void>
-getLatestUserSessionTimestamp(userId): Promise<Date | null>
+getLatestUserSessionTimestamp(userId): Promise<Date null |>
 generateChatWindows(userId): Promise<ChatWindow[]>
 ```
 
 ## Configuration
 
 ### Environment Variables
-
 ```bash
 # Required
 ANTHROPIC_API_KEY=sk-ant-...
 NEXT_PUBLIC_CLAUDE_MODEL=claude-sonnet-4-20250514
 
 # Required for strategy generation
-GEMINI_API_KEY=...
-GEMINI_MODEL=gemini-2.5-flash
+QWEN_API_KEY=...
+QWEN_MODEL=qwen-max
 
 # Optional customization
 NEXT_PUBLIC_CHATBOT_NAME=Day
@@ -168,11 +149,8 @@ NEXT_PUBLIC_MIN_SESSION_MINUTES=5
 ```
 
 ### Session Cooldown
-
 By default, users must wait 1 hour between chat sessions. This encourages longitudinal data collection rather than single long sessions.
-
 To modify, change the cooldown check in `app/chat/page.tsx`:
-
 ```typescript
 const COOLDOWN_PERIOD = parseInt(
   process.env.NEXT_PUBLIC_SESSION_COOLDOWN_MS || '3600000'
@@ -182,7 +160,6 @@ const COOLDOWN_PERIOD = parseInt(
 ## Database Tables
 
 ### chatlog
-
 Main table for chat messages:
 
 | Column | Type | Description |
@@ -198,7 +175,6 @@ Main table for chat messages:
 | potential_items | TEXT[] | Extracted items (post-analysis) |
 
 ### chat_backup
-
 Failsafe backup table (RLS disabled):
 
 | Column | Type | Description |
@@ -212,7 +188,6 @@ Failsafe backup table (RLS disabled):
 | backup_timestamp | TIMESTAMPTZ | When backup was created |
 
 ### conversation_strategies
-
 Stores AI-generated strategies:
 
 | Column | Type | Description |
@@ -224,7 +199,6 @@ Stores AI-generated strategies:
 | time_of_day | TEXT | morning/afternoon/evening/night |
 
 ### chat_feedback
-
 User feedback after sessions:
 
 | Column | Type | Description |
@@ -238,13 +212,10 @@ User feedback after sessions:
 ## Customization Guide
 
 ### Modifying the Chatbot Persona
-
 Edit `app/chat/services/claude-service.ts`:
-
 ```typescript
 let systemPrompt = `Your name is ${CHATBOT_NAME}. A friend in conversation...`;
 ```
-
 Key persona elements to customize:
 - Name and identity
 - Communication style
@@ -252,20 +223,15 @@ Key persona elements to customize:
 - Boundaries and limitations
 
 ### Changing Conversation Strategies
-
 Edit `app/chat/services/strategy-service.ts`:
-
 The strategy generation prompt can be modified to change how Day approaches conversations. Key parameters:
-
 - `insights`: Communication patterns to follow
 - `shared_memories`: Things to reference from past conversations
 - `user_profile`: User characteristics
 - `conversation_goals`: What to achieve in the conversation
 
 ### Adding New Time-of-Day Behaviors
-
 Modify the time-specific prompts in both Claude and Strategy services:
-
 ```typescript
 switch (timeOfDay) {
   case 'morning':
@@ -279,16 +245,13 @@ switch (timeOfDay) {
 ```
 
 ## Data Export
-
 Chat data can be exported via the Admin Dashboard:
-
 1. Go to Admin → Dashboard
 2. Find the user in the user list
 3. Click "Export Chats"
 4. Download JSON file
 
 Export format:
-
 ```json
 {
   "sessions": {
@@ -306,19 +269,16 @@ Export format:
 ## Troubleshooting
 
 ### Chat Not Responding
-
 1. Check browser console for API errors
 2. Verify `ANTHROPIC_API_KEY` is set
 3. Check Anthropic console for rate limits
 
 ### Strategy Generation Fails
-
-1. Verify `GEMINI_API_KEY` is set
-2. Check Google AI Studio for quotas
-3. Strategy will fall back to basic mode if Gemini fails
+1. Verify `QWEN_API_KEY` is set
+2. Check Aliyun/DashScope console for quotas
+3. Strategy will fall back to basic mode if Qwen fails
 
 ### Messages Not Saving
-
 1. Check Supabase connection
 2. Verify user is authenticated
 3. Check `chat_backup` table for failsafe saves
