@@ -1,18 +1,17 @@
 import { createClient } from '@/utils/supabase/client';
 import { formatConversation } from '@/app/utils/chat-formatting';
 import { processValueResults } from '@/components/survey/value-utils';
-import { Type } from "@google/genai";
-import { callGeminiWithThinking, ThinkingLogParams } from '@/app/utils/thinking-logger';
-import { GEMINI_FLASH } from '@/app/config/models';
+import { callQwenWithThinking, ThinkingLogParams } from '@/app/utils/thinking-logger';
+import { QWEN_MODEL } from '@/app/config/models';
 
-// Helper to call Gemini via API route (unused, kept for reference)
-async function callGeminiAPI(prompt: string, responseSchema?: unknown): Promise<string> {
-  const response = await fetch('/api/gemini/generate', {
+// Helper to call Qwen via API route (unused, kept for reference)
+async function callQwenAPI(prompt: string, responseSchema?: unknown): Promise<string> {
+  const response = await fetch('/api/qwen/generate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       prompt,
-      model: GEMINI_FLASH,
+      model: QWEN_MODEL,
       responseSchema,
     }),
   });
@@ -24,11 +23,11 @@ async function callGeminiAPI(prompt: string, responseSchema?: unknown): Promise<
       const retryAfter = data.retryAfter || 60;
       throw new Error(
         `Rate limit exceeded. Free tier limits reached. ` +
-        `Add billing at console.cloud.google.com to increase quota. Retry in ${retryAfter}s.`
+        `Add billing at dashscope.console.aliyun.com to increase quota. Retry in ${retryAfter}s.`
       );
     }
     if (response.status === 503) {
-      throw new Error(`AI service not configured. Add GEMINI_API_KEY to your environment.`);
+      throw new Error(`AI service not configured. Add QWEN_API_KEY to your environment.`);
     }
     throw new Error(data.error || `API error: ${response.status}`);
   }
@@ -36,11 +35,12 @@ async function callGeminiAPI(prompt: string, responseSchema?: unknown): Promise<
   if (data.error) {
     throw new Error(data.error);
   }
+
   return data.text || '';
 }
 
 // Define constants
-const MODEL_NAME = GEMINI_FLASH;
+const MODEL_NAME = QWEN_MODEL;
 
 export interface Stage2Round {
   id: string;
@@ -293,7 +293,7 @@ function calculateStatus(rounds: Stage2Round[]): Stage2ExperimentStatus {
 /**
  * Generate all persona responses for all 5 rounds
  * @param userId - User ID
- * @param userApiKey - Optional user-provided Gemini API key
+ * @param userApiKey - Optional user-provided Qwen API key
  */
 export async function generateAllPersonaResponses(
   userId: string,
@@ -404,7 +404,7 @@ export async function generateAllPersonaResponses(
  * @param scenarioPrompt - The scenario prompt
  * @param chatHistory - User's chat history
  * @param userValueResults - User's processed value results
- * @param userApiKey - Optional user-provided Gemini API key
+ * @param userApiKey - Optional user-provided Qwen API key
  */
 async function generatePersonaResponsesForScenario(
   userId: string,
@@ -421,13 +421,12 @@ async function generatePersonaResponsesForScenario(
     centeredScore: (Math.random() - 0.5) * 4 // Random score between -2 and 2
   }));
 
-
   // Define the JSON response schema (same for all personas)
   const responseSchema = {
-    type: Type.OBJECT,
+    type: 'object',
     properties: {
-      response: { type: Type.STRING },
-      reasoning: { type: Type.STRING }
+      response: { type: 'string' },
+      reasoning: { type: 'string' }
     },
     required: ["response", "reasoning"]
   };
@@ -468,7 +467,7 @@ ${formattedChatHistory}
       userApiKey
     };
 
-    const result1 = await callGeminiWithThinking(
+    const result1 = await callQwenWithThinking(
       null,
       {
         model: MODEL_NAME,
@@ -485,6 +484,7 @@ ${formattedChatHistory}
     );
 
     const parsed1 = JSON.parse(result1.text || '{}');
+    
     responses['user_embodiment'] = {
       response: parsed1.response || 'Failed to generate response',
       reasoning: parsed1.reasoning || 'Failed to generate reasoning'
@@ -529,7 +529,7 @@ ${formattedChatHistory}
       userApiKey
     };
 
-    const result2 = await callGeminiWithThinking(
+    const result2 = await callQwenWithThinking(
       null,
       {
         model: MODEL_NAME,
@@ -546,6 +546,7 @@ ${formattedChatHistory}
     );
 
     const parsed2 = JSON.parse(result2.text || '{}');
+    
     responses['anti_user'] = {
       response: parsed2.response || 'Failed to generate response',
       reasoning: parsed2.reasoning || 'Failed to generate reasoning'
@@ -588,7 +589,7 @@ ${userValueResults.map(v => `${v.name}: ${v.centeredScore.toFixed(2)}`).join(', 
       userApiKey
     };
 
-    const result3 = await callGeminiWithThinking(
+    const result3 = await callQwenWithThinking(
       null,
       {
         model: MODEL_NAME,
@@ -605,6 +606,7 @@ ${userValueResults.map(v => `${v.name}: ${v.centeredScore.toFixed(2)}`).join(', 
     );
 
     const parsed3 = JSON.parse(result3.text || '{}');
+    
     responses['schwartz_values'] = {
       response: parsed3.response || 'Failed to generate response',
       reasoning: parsed3.reasoning || 'Failed to generate reasoning'
@@ -647,7 +649,7 @@ ${randomValues.map(v => `${v.name}: ${v.centeredScore.toFixed(2)}`).join(', ')}
       userApiKey
     };
 
-    const result4 = await callGeminiWithThinking(
+    const result4 = await callQwenWithThinking(
       null,
       {
         model: MODEL_NAME,
@@ -664,6 +666,7 @@ ${randomValues.map(v => `${v.name}: ${v.centeredScore.toFixed(2)}`).join(', ')}
     );
 
     const parsed4 = JSON.parse(result4.text || '{}');
+    
     responses['random_schwartz'] = {
       response: parsed4.response || 'Failed to generate response',
       reasoning: parsed4.reasoning || 'Failed to generate reasoning'
@@ -747,4 +750,4 @@ export async function resetStage2Experiment(userId: string): Promise<{ success: 
       error: error instanceof Error ? error.message : 'Unknown error resetting experiment' 
     };
   }
-} 
+}

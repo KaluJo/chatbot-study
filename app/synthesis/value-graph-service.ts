@@ -1,20 +1,19 @@
 import { createClient } from '@/utils/supabase/client';
 import { ChatWindow } from '../chat/services/chatlog-service';
-import { Type } from "@google/genai";
 import { DatabaseItem } from '@/components/visualization/types';
 import { v4 as uuidv4 } from 'uuid';
 import { ClientChatWindow } from './types';
 import { formatConversation as formatChatConversation } from '@/app/utils/chat-formatting';
-import { GEMINI_PRO } from '@/app/config/models';
+import { QWEN_MODEL_PRO } from '@/app/config/models';
 
-// Helper to call Gemini via API route
-async function callGeminiAPI(prompt: string, responseSchema?: unknown, userApiKey?: string): Promise<string> {
-  const response = await fetch('/api/gemini/generate', {
+// Helper to call Qwen via API route
+async function callQwenAPI(prompt: string, responseSchema?: unknown, userApiKey?: string): Promise<string> {
+  const response = await fetch('/api/qwen/generate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       prompt,
-      model: GEMINI_PRO,
+      model: QWEN_MODEL_PRO,
       responseSchema,
       userApiKey, // Pass user's API key if provided
     }),
@@ -27,11 +26,11 @@ async function callGeminiAPI(prompt: string, responseSchema?: unknown, userApiKe
       const retryAfter = data.retryAfter || 60;
       throw new Error(
         `Rate limit exceeded. Free tier limits reached. ` +
-        `Add billing at console.cloud.google.com to increase quota. Retry in ${retryAfter}s.`
+        `Add billing at dashscope.console.aliyun.com to increase quota. Retry in ${retryAfter}s.`
       );
     }
     if (response.status === 503) {
-      throw new Error(`AI service not configured. Add GEMINI_API_KEY to your environment or provide your own key.`);
+      throw new Error(`AI service not configured. Add QWEN_API_KEY to your environment or provide your own key.`);
     }
     throw new Error(data.error || `API error: ${response.status}`);
   }
@@ -39,10 +38,12 @@ async function callGeminiAPI(prompt: string, responseSchema?: unknown, userApiKe
   if (data.error) {
     throw new Error(data.error);
   }
+
   return data.text || '';
 }
 
 // ================== Types ==================
+
 export interface Topic {
   id: string;
   label: string;
@@ -327,20 +328,20 @@ For example:
 Provide your decision along with the reasoning.`;
 
     const responseSchema = {
-      type: Type.OBJECT,
+      type: 'object',
       properties: {
-        should_replace_main_label: { type: Type.BOOLEAN },
-        main_label: { type: Type.STRING },
+        should_replace_main_label: { type: 'boolean' },
+        main_label: { type: 'string' },
         related_labels: { 
-          type: Type.ARRAY,
-          items: { type: Type.STRING }
+          type: 'array',
+          items: { type: 'string' }
         },
-        reasoning: { type: Type.STRING }
+        reasoning: { type: 'string' }
       },
       required: ["should_replace_main_label", "main_label", "related_labels", "reasoning"]
     };
     
-    const responseText = await callGeminiAPI(prompt, responseSchema);
+    const responseText = await callQwenAPI(prompt, responseSchema);
     if (responseText) {
       const parsed = JSON.parse(responseText) as TopicLabelDecision;
       return { 
@@ -426,29 +427,28 @@ Should include? [YES/NO]
 Reasoning: [DETAILED REASONING]"
 
 Then, ONLY for topics you decide to include (max 1-2 topics from this conversation), provide the structured data.
-
 If no topics meet the high threshold, it's perfectly acceptable to return an empty array.`;
 
     const responseSchema = {
-      type: Type.ARRAY,
+      type: 'array',
       items: {
-        type: Type.OBJECT,
+        type: 'object',
         properties: {
-          topic: { type: Type.STRING },
-          context: { type: Type.STRING },
-          score: { type: Type.NUMBER },
-          reasoning: { type: Type.STRING },
-          confidence: { type: Type.NUMBER },
+          topic: { type: 'string' },
+          context: { type: 'string' },
+          score: { type: 'number' },
+          reasoning: { type: 'string' },
+          confidence: { type: 'number' },
           relevant_exchanges: { 
-            type: Type.ARRAY,
-            items: { type: Type.NUMBER }
+            type: 'array',
+            items: { type: 'number' }
           }
         },
         required: ["topic", "context", "score", "reasoning", "confidence", "relevant_exchanges"]
       }
     };
     
-    const responseText = await callGeminiAPI(prompt, responseSchema);
+    const responseText = await callQwenAPI(prompt, responseSchema);
     if (responseText) {
       const parsed = JSON.parse(responseText) as any[];
       
@@ -530,16 +530,16 @@ Please decide how to update the node's score based on this new information. Cons
 Provide a decision along with the reasoning.`;
 
     const responseSchema = {
-      type: Type.OBJECT,
+      type: 'object',
       properties: {
-        should_update: { type: Type.BOOLEAN },
-        new_score: { type: Type.NUMBER },
-        change_reason: { type: Type.STRING }
+        should_update: { type: 'boolean' },
+        new_score: { type: 'number' },
+        change_reason: { type: 'string' }
       },
       required: ["should_update", "new_score", "change_reason"]
     };
     
-    const responseText = await callGeminiAPI(prompt, responseSchema);
+    const responseText = await callQwenAPI(prompt, responseSchema);
     if (responseText) {
       const parsed = JSON.parse(responseText) as NodeScoreUpdate;
       return { 
@@ -590,6 +590,7 @@ export async function createTopicFallback(
       reasoning: reasoning || `Fallback topic creation for "${normalizedLabel}"`,
       user_id: null,
     };
+
     const { data: newTopic, error: createError } = await supabase
       .from('topics')
       .insert(topicDataToInsert)
@@ -700,6 +701,7 @@ export async function createOrUpdateTopic(
         reasoning: reasoning || `New topic created for "${normalizedLabel}"`,
         user_id: null,
       };
+
       const { data: newTopic, error: createError } = await supabase
         .from('topics')
         .insert(topicDataToInsert)
@@ -1137,36 +1139,39 @@ export async function getRelevantGraphDataForWindows(windowUUIDs: string[], user
   // Or, if it operates on client-side generated windows before they are saved, it needs their temporary identifiers.
   // For now, assuming it will receive DB IDs.
   if (!windowUUIDs || windowUUIDs.length === 0) return [];
-
+  
   const supabase = createClient();
+  
   // Fetch windows by their database IDs
   const { data: windows, error: windowsError } = await supabase
     .from('chat_windows')
     .select('*')
     .in('id', windowUUIDs) // Changed from window_uuid
     .eq('user_id', userId);
-
+    
   if (windowsError) throw windowsError;
   if (!windows || windows.length === 0) return [];
-
+  
   const allChatIdsInWindows = Array.from(new Set(windows.flatMap(w => w.chat_ids))); // Changed from chat_uuids
-
+  
   // Fetch relevant items
   const { data: items, error: itemsError } = await supabase
     .from('items')
     .select('*')
     .overlaps('chat_ids', allChatIdsInWindows) // Use chat_ids instead of conversation_ids
     .eq('user_id', userId);
+    
   if (itemsError) throw itemsError;
-
+  
   // Fetch relevant value nodes
   const { data: nodes, error: nodesError } = await supabase
     .from('value_nodes')
     .select('*, topics!inner(id, label, related_labels), contexts!inner(id, name, description)')
     .overlaps('chat_ids', allChatIdsInWindows) // Use chat_ids instead of conversation_ids
     .eq('user_id', userId);
+    
   if (nodesError) throw nodesError;
-
+  
   // Re-structure nodes to include topic and context details directly
   const processedNodes = nodes?.map(node => ({
     ...node,
@@ -1178,7 +1183,7 @@ export async function getRelevantGraphDataForWindows(windowUUIDs: string[], user
     topics: undefined,
     contexts: undefined,
   })) || [];
-
+  
   return {
     items: (items as ValueItem[]) || [],
     nodes: (processedNodes as any[]) || [], // Cast to any[] for now if processedNodes structure is complex
@@ -1193,13 +1198,13 @@ export function formatWindowData(window: ChatWindow | ClientChatWindow): string 
 
 // Format the conversation for value analysis
 const formatValueAnalysisConversation = (window: ChatWindow | ClientChatWindow): string => {
-  return formatChatConversation(window.chat_data, 'gemini-analysis');
+  return formatChatConversation(window.chat_data, 'qwen-analysis');
 };
 
 export async function analyzeWindowForValues(window: ChatWindow): Promise<ValueAnalysisResult> {
   try {
     // Format the conversation for the prompt using our utility
-    const conversationText = formatChatConversation(window.chat_data, 'gemini-analysis');
+    const conversationText = formatChatConversation(window.chat_data, 'qwen-analysis');
     
     const prompt = `You are a value identification system that analyzes conversations.
 
@@ -1217,70 +1222,70 @@ Look for what the HUMAN user cares about, what they prioritize, and what matters
 ${conversationText}`;
 
     const responseSchema = {
-      type: Type.OBJECT,
+      type: 'object',
       properties: {
         topics: {
-          type: Type.ARRAY,
+          type: 'array',
           items: {
-            type: Type.OBJECT,
+            type: 'object',
             properties: {
-              topic: { type: Type.STRING },
-              context: { type: Type.STRING },
-              score: { type: Type.NUMBER },
-              reasoning: { type: Type.STRING },
-              confidence: { type: Type.NUMBER },
+              topic: { type: 'string' },
+              context: { type: 'string' },
+              score: { type: 'number' },
+              reasoning: { type: 'string' },
+              confidence: { type: 'number' },
               relevant_exchanges: { 
-                type: Type.ARRAY,
-                items: { type: Type.NUMBER }
+                type: 'array',
+                items: { type: 'number' }
               }
             },
             required: ["topic", "context", "score", "reasoning", "confidence", "relevant_exchanges"]
           }
         },
         nodes: {
-          type: Type.ARRAY,
+          type: 'array',
           items: {
-            type: Type.OBJECT,
+            type: 'object',
             properties: {
-              id: { type: Type.STRING },
-              topic_id: { type: Type.STRING },
-              context_id: { type: Type.STRING },
-              context_name: { type: Type.STRING },
-              score: { type: Type.NUMBER },
-              reasoning: { type: Type.STRING },
+              id: { type: 'string' },
+              topic_id: { type: 'string' },
+              context_id: { type: 'string' },
+              context_name: { type: 'string' },
+              score: { type: 'number' },
+              reasoning: { type: 'string' },
               chat_ids: {
-                type: Type.ARRAY,
-                items: { type: Type.STRING }
+                type: 'array',
+                items: { type: 'string' }
               },
               item_ids: {
-                type: Type.ARRAY,
-                items: { type: Type.STRING }
+                type: 'array',
+                items: { type: 'string' }
               },
-              user_id: { type: Type.STRING },
-              created_at: { type: Type.STRING },
-              updated_at: { type: Type.STRING }
+              user_id: { type: 'string' },
+              created_at: { type: 'string' },
+              updated_at: { type: 'string' }
             },
             required: ["id", "topic_id", "context_id", "context_name", "score", "reasoning", "chat_ids", "item_ids", "user_id", "created_at", "updated_at"]
           }
         },
         items: {
-          type: Type.ARRAY,
+          type: 'array',
           items: {
-            type: Type.OBJECT,
+            type: 'object',
             properties: {
-              id: { type: Type.STRING },
-              name: { type: Type.STRING },
+              id: { type: 'string' },
+              name: { type: 'string' },
               chat_ids: {
-                type: Type.ARRAY,
-                items: { type: Type.STRING }
+                type: 'array',
+                items: { type: 'string' }
               },
               embedding: {
-                type: Type.ARRAY,
-                items: { type: Type.NUMBER }
+                type: 'array',
+                items: { type: 'number' }
               },
-              user_id: { type: Type.STRING },
-              created_at: { type: Type.STRING },
-              updated_at: { type: Type.STRING }
+              user_id: { type: 'string' },
+              created_at: { type: 'string' },
+              updated_at: { type: 'string' }
             },
             required: ["id", "name", "chat_ids", "embedding", "user_id", "created_at", "updated_at"]
           }
@@ -1289,7 +1294,7 @@ ${conversationText}`;
       required: ["topics", "nodes", "items"]
     };
     
-    const responseText = await callGeminiAPI(prompt, responseSchema);
+    const responseText = await callQwenAPI(prompt, responseSchema);
     if (responseText) {
       const parsed = JSON.parse(responseText) as ValueAnalysisResult;
       return parsed;
@@ -1304,4 +1309,4 @@ ${conversationText}`;
       items: []
     };
   }
-} 
+}

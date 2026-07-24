@@ -1,5 +1,5 @@
 import { createClient } from '@/utils/supabase/client';
-import { GEMINI_PRO, GEMINI_FLASH } from '@/app/config/models';
+import { QWEN_MODEL_PRO, QWEN_MODEL } from '@/app/config/models';
 
 export interface ThinkingLogParams {
   userId?: string;
@@ -13,22 +13,22 @@ export interface ThinkingLogParams {
   userApiKey?: string; // Optional: user-provided API key for features requiring their own key
 }
 
-export interface GeminiResponseWithThinking {
+export interface QwenResponseWithThinking {
   text: string;
   thinking?: string;
 }
 
 // Model name for thinking-compatible operations
-const THINKING_COMPATIBLE_MODEL = GEMINI_PRO;
+const THINKING_COMPATIBLE_MODEL = QWEN_MODEL_PRO;
 
 // Export for convenience
-export { GEMINI_PRO, GEMINI_FLASH };
+export { QWEN_MODEL_PRO, QWEN_MODEL };
 
 /**
- * Enhanced Gemini API call that captures thinking summaries
- * Now uses API route instead of direct Gemini SDK call
+ * Enhanced Qwen API call that captures thinking summaries
+ * Now uses API route instead of direct Qwen SDK call
  */
-export async function callGeminiWithThinking(
+export async function callQwenWithThinking(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _ai: unknown, // Kept for backwards compatibility, but not used
   config: {
@@ -44,7 +44,7 @@ export async function callGeminiWithThinking(
   },
   logParams: ThinkingLogParams,
   logger?: (message: string, type?: 'info' | 'error' | 'warning') => void
-): Promise<GeminiResponseWithThinking> {
+): Promise<QwenResponseWithThinking> {
   const startTime = Date.now();
   
   const log = (message: string, type: 'info' | 'error' | 'warning' = 'info') => {
@@ -61,10 +61,10 @@ export async function callGeminiWithThinking(
   };
 
   try {
-    log(`[${logParams.serviceName}] Starting Gemini call for ${logParams.operationName} via API route`);
+    log(`[${logParams.serviceName}] Starting Qwen call for ${logParams.operationName} via API route`);
     
-    // Call server API route instead of direct Gemini SDK
-    const response = await fetch('/api/gemini/generate', {
+    // Call server API route instead of direct Qwen SDK
+    const response = await fetch('/api/qwen/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -83,19 +83,20 @@ export async function callGeminiWithThinking(
       if (response.status === 429) {
         const retryAfter = data.retryAfter || 60;
         throw new Error(
-          `Rate limit exceeded. The free tier of Gemini API has strict limits. ` +
-          `To fix this: Go to console.cloud.google.com → APIs & Services → Gemini API → ` +
+          `Rate limit exceeded. The free tier of Qwen API has strict limits. ` +
+          `To fix this: Go to dashscope.console.aliyun.com → API Key Management → ` +
           `add a billing account to increase your quota. Retry in ${retryAfter}s.`
         );
       }
       if (response.status === 503) {
         throw new Error(
-          `AI service not configured. Please add your GEMINI_API_KEY in .env.local ` +
+          `AI service not configured. Please add your QWEN_API_KEY in .env.local ` +
           `or configure it in your deployment settings.`
         );
       }
       throw new Error(data.error || `API error: ${response.status}`);
     }
+
     const executionTime = Date.now() - startTime;
     
     if (data.error) {
@@ -128,7 +129,7 @@ export async function callGeminiWithThinking(
     
   } catch (error) {
     const executionTime = Date.now() - startTime;
-    log(`[${logParams.serviceName}] Error in Gemini call: ${error instanceof Error ? error.message : String(error)}`, 'error');
+    log(`[${logParams.serviceName}] Error in Qwen call: ${error instanceof Error ? error.message : String(error)}`, 'error');
     
     // Store error information
     if (logParams.userId) {
@@ -191,15 +192,15 @@ async function storeThinkingSummary(params: ThinkingLogParams & {
 }
 
 /**
- * Simple Gemini call without thinking (for simpler use cases)
+ * Simple Qwen call without thinking (for simpler use cases)
  */
-export async function callGeminiSimple(
+export async function callQwenSimple(
   prompt: string,
-  model: string = GEMINI_FLASH,
+  model: string = QWEN_MODEL,
   responseSchema?: unknown,
   userApiKey?: string
 ): Promise<string> {
-  const response = await fetch('/api/gemini/generate', {
+  const response = await fetch('/api/qwen/generate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -217,14 +218,14 @@ export async function callGeminiSimple(
     if (response.status === 429) {
       const retryAfter = data.retryAfter || 60;
       throw new Error(
-        `Rate limit exceeded. The free tier of Gemini API has strict limits. ` +
-        `To fix this: Go to console.cloud.google.com → APIs & Services → Gemini API → ` +
+        `Rate limit exceeded. The free tier of Qwen API has strict limits. ` +
+        `To fix this: Go to dashscope.console.aliyun.com → API Key Management → ` +
         `add a billing account to increase your quota. Retry in ${retryAfter}s.`
       );
     }
     if (response.status === 503) {
       throw new Error(
-        `AI service not configured. Please add your GEMINI_API_KEY in .env.local ` +
+        `AI service not configured. Please add your QWEN_API_KEY in .env.local ` +
         `or configure it in your deployment settings.`
       );
     }

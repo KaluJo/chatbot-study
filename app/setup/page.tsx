@@ -8,7 +8,7 @@ import { Copy, Check, RefreshCw } from 'lucide-react';
 interface ServiceStatus {
   supabase: boolean | null;
   claude: boolean | null;
-  gemini: boolean | null;
+  qwen: boolean | null;
   openai: boolean | null;
 }
 
@@ -26,15 +26,17 @@ export default function SetupPage() {
   const [services, setServices] = useState<ServiceStatus>({
     supabase: null,
     claude: null,
-    gemini: null,
+    qwen: null,
     openai: null,
   });
+  
   const [adminName, setAdminName] = useState('');
   const [adminCode, setAdminCode] = useState('');
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState('');
   const [hasExistingUsers, setHasExistingUsers] = useState(false);
   const [sqlCopied, setSqlCopied] = useState(false);
+
   const [supabaseStatus, setSupabaseStatus] = useState<SupabaseStatus>({
     connected: null,
     schemaReady: null,
@@ -58,11 +60,12 @@ export default function SetupPage() {
   }, []);
 
   async function checkServices() {
-    setServices({ supabase: null, claude: null, gemini: null, openai: null });
+    setServices({ supabase: null, claude: null, qwen: null, openai: null });
     setSupabaseStatus({ connected: null, schemaReady: null, missingTables: [] });
+    
     checkSupabase();
     checkClaude();
-    checkGemini();
+    checkQwen();
     checkOpenAI();
   }
 
@@ -176,16 +179,16 @@ export default function SetupPage() {
     }
   }
 
-  async function checkGemini() {
+  async function checkQwen() {
     try {
-      const res = await fetch('/api/gemini/generate', {
+      const res = await fetch('/api/qwen/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: 'Say OK' }),
       });
-      setServices(s => ({ ...s, gemini: res.ok }));
+      setServices(s => ({ ...s, qwen: res.ok }));
     } catch {
-      setServices(s => ({ ...s, gemini: false }));
+      setServices(s => ({ ...s, qwen: false }));
     }
   }
 
@@ -207,11 +210,13 @@ export default function SetupPage() {
       setError('Please provide both name and access code');
       return;
     }
+
     setCreating(true);
     setError('');
 
     try {
       const supabase = createClient();
+      
       const { data: existing } = await supabase
         .from('value_graph_users')
         .select('id')
@@ -238,6 +243,7 @@ export default function SetupPage() {
         setCreating(false);
         return;
       }
+
       setStep('complete');
     } catch (err) {
       setError('Error: ' + (err instanceof Error ? err.message : String(err)));
@@ -315,36 +321,42 @@ export default function SetupPage() {
                           <p className="text-sm text-red-600 mt-1">Add your Supabase project URL to <code className="bg-red-100 px-1 py-0.5 rounded text-xs">.env.local</code> and restart the dev server.</p>
                         </>
                       )}
+                      
                       {supabaseStatus.errorType === 'missing_key' && (
                         <>
                           <p className="text-sm text-red-700 font-medium">Missing NEXT_PUBLIC_SUPABASE_ANON_KEY</p>
                           <p className="text-sm text-red-600 mt-1">Add your Supabase publishable key to <code className="bg-red-100 px-1 py-0.5 rounded text-xs">.env.local</code> and restart the dev server.</p>
                         </>
                       )}
+                      
                       {supabaseStatus.errorType === 'invalid_url' && (
                         <>
                           <p className="text-sm text-red-700 font-medium">Invalid Supabase URL</p>
                           <p className="text-sm text-red-600 mt-1">NEXT_PUBLIC_SUPABASE_URL must be a valid URL like <code className="bg-red-100 px-1 py-0.5 rounded text-xs">https://xyz.supabase.co</code></p>
                         </>
                       )}
+                      
                       {supabaseStatus.errorType === 'invalid_key' && (
                         <>
                           <p className="text-sm text-red-700 font-medium">Invalid API key</p>
                           <p className="text-sm text-red-600 mt-1">Check that NEXT_PUBLIC_SUPABASE_ANON_KEY matches your Supabase project&apos;s publishable key.</p>
                         </>
                       )}
+                      
                       {supabaseStatus.errorType === 'connection_error' && (
                         <>
                           <p className="text-sm text-red-700 font-medium">Connection failed</p>
                           <p className="text-sm text-red-600 mt-1">{supabaseStatus.errorMessage || 'Check your Supabase URL and API key.'}</p>
                         </>
                       )}
+
                       {!supabaseStatus.errorType && (
                         <>
                           <p className="text-sm text-red-700 font-medium">Connection failed</p>
                           <p className="text-sm text-red-600 mt-1">Check your Supabase URL and API key in <code className="bg-red-100 px-1 py-0.5 rounded text-xs">.env.local</code></p>
                         </>
                       )}
+                      
                       <button 
                         onClick={checkServices}
                         disabled={isLoading}
@@ -439,15 +451,15 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...`}
               
               <div className="space-y-4">
                 <ServiceRow
-                  name="Gemini"
+                  name="Qwen"
                   description="Conversation strategies"
-                  status={<Status ok={services.gemini} />}
-                  expanded={services.gemini === false}
+                  status={<Status ok={services.qwen} />}
+                  expanded={services.qwen === false}
                 >
                   <p className="text-sm text-gray-600">
                     Without this, chat uses generic strategies. 
-                    Add <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">GEMINI_API_KEY</code> from{' '}
-                    <a href="https://aistudio.google.com/api-keys" className="text-blue-600 hover:underline" target="_blank">aistudio.google.com</a>
+                    Add <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">QWEN_API_KEY</code> from{' '}
+                    <a href="https://dashscope.console.aliyun.com/api-key-management" className="text-blue-600 hover:underline" target="_blank">Aliyun Console</a>
                   </p>
                 </ServiceRow>
 
@@ -510,6 +522,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...`}
                 </li>
               </ul>
             </section>
+
           </div>
         )}
 
@@ -526,7 +539,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...`}
                 className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent placeholder:text-gray-400"
               />
             </div>
-
+            
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Access Code</label>
               <input
@@ -617,6 +630,7 @@ function ServiceRow({
         </div>
         <div className="text-sm">{status}</div>
       </div>
+      
       {expanded && children && (
         <div className="mt-4 pt-4 border-t border-gray-100">
           {children}

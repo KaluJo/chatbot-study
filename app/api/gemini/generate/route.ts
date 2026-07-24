@@ -1,69 +1,91 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenAI } from "@google/genai";
 
-// Gemini models fallback chain
-// Model codes from https://ai.google.dev/gemini-api/docs/models
-const GEMINI_FALLBACK_ORDER = [
-  'gemini-2.5-flash',       // Stable - best price-performance (recommended)
-  'gemini-2.5-flash-lite',  // Stable - fastest, cost-efficient
-  'gemini-2.5-pro',         // Stable - advanced thinking (may have lower rate limits)
-  'gemini-2.0-flash',       // Deprecated March 2026
+// Qwen models fallback chain (Alibaba Cloud DashScope)
+const QWEN_FALLBACK_ORDER = [
+  'qwen-plus',   // Recommended - best balance of capability and speed
+  'qwen-turbo',  // Fastest, cost-efficient
+  'qwen-max',    // Most advanced reasoning
 ];
 
 // Check if error should trigger fallback to next model
 function shouldFallback(errorMsg: string): boolean {
   const fallbackTriggers = [
-    '429', 'RESOURCE_EXHAUSTED', 'quota', 'Too Many Requests', // Rate limits
-    '503', 'UNAVAILABLE', 'overloaded',                         // Service unavailable
-    'timeout', 'DEADLINE_EXCEEDED',                              // Timeouts
+    '429', 'too many requests', 'rate limit', 'quota', // Rate limits
+    '503', 'unavailable', 'overloaded',                // Service unavailable
+    'timeout', 'deadline_exceeded',                    // Timeouts
   ];
   return fallbackTriggers.some(trigger => 
-    errorMsg.toLowerCase().includes(trigger.toLowerCase())
+    errorMsg.toLowerCase().includes(trigger)
   );
 }
 
 // Check if model doesn't exist
 function isModelNotFound(errorMsg: string): boolean {
   return errorMsg.includes('404') || 
-    errorMsg.includes('NOT_FOUND') || 
     errorMsg.toLowerCase().includes('not found') ||
-    errorMsg.toLowerCase().includes('does not exist');
+    errorMsg.toLowerCase().includes('does not exist') ||
+    errorMsg.toLowerCase().includes('invalid model');
 }
 
-async function tryGeminiModel(
-  ai: GoogleGenAI,
+async function tryQwenModel(
   model: string,
   prompt: string,
-  config: Record<string, unknown> | undefined
-): Promise<{ text: string | undefined; thinkingSummary?: string; error?: string } | null> {
+  apiKey: string,
+  responseSchema?: Record<string, unknown>
+): Promise<{ text: string | undefined; error?: string } | null> {
   try {
-    const response = await ai.models.generateContent({
-      model,
-      contents: prompt,
-      config,
+    let finalPrompt = prompt;
+    const requestBody: any = {
+      model: model,
+      messages: [],
+    };
+
+    // If a JSON schema is expected, enforce it via prompt and JSON object type
+    if (responseSchema) {
+      finalPrompt += `\n\nIMPORTANT: You must output ONLY valid JSON matching this schema: ${JSON.stringify(responseSchema)}. Do not include markdown formatting like \`\`\`json.`;
+      requestBody.response_format = { type: 'json_object' };
+    }
+
+    requestBody.messages.push({ role: 'user', content: finalPrompt });
+
+    const response = await fetch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify(requestBody)
     });
 
-    return {
-      text: response.text,
-      thinkingSummary: response.candidates?.[0]?.content?.parts?.find(
-        (p: { thought?: boolean }) => p.thought
-      )?.text,
-    };
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Qwen API Error (${response.status}): ${errorText}`);
+    }
+
+    const data = await response.json();
+    let content = data.choices[0].message.content;
+    
+    // Clean up potential markdown formatting if JSON was requested
+    if (responseSchema) {
+      content = content.replace(/```json/gi, '').replace(/```/gi, '').trim();
+    }
+
+    return { text: content };
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error);
     
     if (shouldFallback(errorMsg)) {
-      console.log(`[API/Gemini] Rate limit on ${model}, trying next...`);
+      console.log(`[API/Qwen] Rate limit or unavailable on ${model}, trying next...`);
       return null; // Signal to try next model
     }
     
     if (isModelNotFound(errorMsg)) {
-      console.log(`[API/Gemini] Model ${model} not found, trying next...`);
+      console.log(`[API/Qwen] Model ${model} not found, trying next...`);
       return null; // Signal to try next model
     }
     
     // For other errors, return error details
-    console.error(`[API/Gemini] Error on ${model}:`, errorMsg);
+    console.error(`[API/Qwen] Error on ${model}:`, errorMsg);
     return { text: undefined, error: errorMsg };
   }
 }
@@ -73,19 +95,19 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { 
       prompt, 
-      model = "gemini-2.5-flash",
+      model = "qwen-plus",
       responseSchema,
-      thinkingBudget = 10000,
-      userApiKey, // Optional: user-provided API key
+      thinkingBudget, // Unused in standard Qwen API, kept for interface compatibility
+      userApiKey, 
     } = body;
 
     // Use user-provided key if available, otherwise fall back to server key
-    const apiKey = userApiKey || process.env.GEMINI_API_KEY;
+    const apiKey = userApiKey || process.env.QWEN_API_KEY;
     const isUserKey = !!userApiKey;
 
     if (!apiKey) {
       return NextResponse.json(
-        { error: 'GEMINI_API_KEY not configured. Add it to your .env.local file or provide your own key.' },
+        { error: 'QWEN_API_KEY not configured. Add it to your .env.local file or provide your own key.' },
         { status: 503 }
       );
     }
@@ -97,36 +119,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Build Gemini config
-    const geminiConfig: Record<string, unknown> = {};
-    if (responseSchema) {
-      geminiConfig.responseMimeType = "application/json";
-      geminiConfig.responseSchema = responseSchema;
-    }
-    if (thinkingBudget) {
-      geminiConfig.thinkingConfig = { thinkingBudget };
-    }
-
-    const ai = new GoogleGenAI({ apiKey });
-    
     if (isUserKey) {
-      console.log('[API/Gemini] Using user-provided API key');
+      console.log('[API/Qwen] Using user-provided API key');
     }
     
     // Find starting index based on requested model
-    let startIndex = GEMINI_FALLBACK_ORDER.indexOf(model);
+    let startIndex = QWEN_FALLBACK_ORDER.indexOf(model);
     if (startIndex === -1) startIndex = 0;
     
-    // Try each Gemini model in order
-    for (let i = startIndex; i < GEMINI_FALLBACK_ORDER.length; i++) {
-      const currentModel = GEMINI_FALLBACK_ORDER[i];
-      console.log(`[API/Gemini] Trying ${currentModel}...`);
+    // Try each Qwen model in order
+    for (let i = startIndex; i < QWEN_FALLBACK_ORDER.length; i++) {
+      const currentModel = QWEN_FALLBACK_ORDER[i];
+      console.log(`[API/Qwen] Trying ${currentModel}...`);
       
-      const result = await tryGeminiModel(
-        ai, 
+      const result = await tryQwenModel(
         currentModel, 
         prompt, 
-        Object.keys(geminiConfig).length > 0 ? geminiConfig : undefined
+        apiKey,
+        responseSchema
       );
       
       if (result) {
@@ -140,42 +150,36 @@ export async function POST(request: NextRequest) {
         
         return NextResponse.json({ 
           text: result.text,
-          thinkingSummary: result.thinkingSummary,
+          thinkingSummary: undefined, // Qwen compatible mode does not return explicit thinking traces
           model: currentModel,
-          provider: 'gemini',
+          provider: 'qwen',
         });
       }
     }
     
     // All models exhausted - rate limited
-    console.log('[API/Gemini] All models rate limited or unavailable');
+    console.log('[API/Qwen] All models rate limited or unavailable');
     return NextResponse.json(
       { 
-        error: 'Rate limit exceeded on all Gemini models. To fix this:\n\n' +
-          '1. Go to console.cloud.google.com\n' +
-          '2. Select your project\n' +
-          '3. Go to APIs & Services → Gemini API\n' +
-          '4. Add a billing account to increase your quota\n\n' +
-          'Or check ai.google.dev/gemini-api/docs/models for the latest available models.',
+        error: 'Rate limit exceeded on all Qwen models. To fix this, please check your Alibaba Cloud DashScope quota.',
         retryAfter: 60 
       },
       { status: 429 }
     );
-
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error);
     
     // Check for auth errors
-    if (errorMsg.includes('401') || errorMsg.includes('API_KEY_INVALID')) {
+    if (errorMsg.includes('401') || errorMsg.includes('InvalidApiKey')) {
       return NextResponse.json(
-        { error: 'Invalid GEMINI_API_KEY. Check your API key at aistudio.google.com/apikey' },
+        { error: 'Invalid QWEN_API_KEY. Check your API key at DashScope console.' },
         { status: 401 }
       );
     }
     
-    console.error('[API/Gemini] Error:', errorMsg);
+    console.error('[API/Qwen] Error:', errorMsg);
     return NextResponse.json(
-      { error: 'Gemini API error', details: errorMsg },
+      { error: 'Qwen API error', details: errorMsg },
       { status: 500 }
     );
   }
