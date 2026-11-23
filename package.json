@@ -28,7 +28,8 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node setup/sync-demo-messages.mjs && next build",
+    "demo:sync": "node setup/sync-demo-messages.mjs --write",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
